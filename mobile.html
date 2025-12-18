@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Healthcare Simulation Competency Tracker - Mobile">
   <meta name="theme-color" content="#1e40af">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -156,6 +156,11 @@
       background: rgba(255,255,255,0.25);
     }
 
+    .header-btn:focus-visible {
+      outline: 3px solid rgba(255,255,255,0.8);
+      outline-offset: 2px;
+    }
+
     .header-btn svg { width: 22px; height: 22px; }
 
     /* Progress Section - Enhanced Card */
@@ -266,6 +271,10 @@
       outline: none;
       border-color: var(--primary);
       box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+
+    [data-theme="dark"] .search-input-mobile:focus {
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
     }
 
     .search-container {
@@ -417,7 +426,7 @@
     }
 
     .status-pill {
-      padding: 12px 8px;
+      padding: 14px 10px;
       border-radius: 12px;
       font-size: 0.8rem;
       font-weight: 600;
@@ -428,7 +437,8 @@
       transition: all 0.2s;
       flex: 1;
       text-align: center;
-      min-width: 70px;
+      min-width: 72px;
+      min-height: 48px;
     }
 
     .status-pill:active {
@@ -469,6 +479,37 @@
       background: var(--success-bg);
       border-color: var(--success);
       color: var(--success);
+    }
+
+    /* Dark mode status pill enhancements */
+    [data-theme="dark"] .status-pill.pending.active {
+      background: #334155;
+      border-color: var(--gray-500);
+      color: #f1f5f9;
+    }
+    [data-theme="dark"] .status-pill.in-process.active {
+      background: rgba(217, 119, 6, 0.2);
+      border-color: var(--warning-light);
+      color: #fbbf24;
+    }
+    [data-theme="dark"] .status-pill.review.active {
+      background: rgba(124, 58, 237, 0.2);
+      border-color: var(--purple-light);
+      color: #c4b5fd;
+    }
+    [data-theme="dark"] .status-pill.completed.active {
+      background: rgba(5, 150, 105, 0.2);
+      border-color: var(--success-light);
+      color: #6ee7b7;
+    }
+
+    /* Focus states for keyboard navigation */
+    .status-pill:focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: 2px;
+    }
+    [data-theme="dark"] .status-pill:focus-visible {
+      outline-color: var(--primary-light);
     }
 
     /* Entry Section - Polished */
@@ -565,6 +606,13 @@
       border-color: var(--primary);
       background: rgba(37, 99, 235, 0.1);
       color: var(--primary);
+    }
+    [data-theme="dark"] .entry-type-btn.active {
+      background: rgba(59, 130, 246, 0.2);
+    }
+    .entry-type-btn:focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: 2px;
     }
 
     .save-entry-btn {
@@ -690,6 +738,14 @@
       transform: scale(0.95);
     }
 
+    .nav-item:focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: 2px;
+    }
+    [data-theme="dark"] .nav-item:focus-visible {
+      outline-color: var(--primary-light);
+    }
+
     .nav-item svg {
       width: 26px;
       height: 26px;
@@ -776,6 +832,13 @@
       background: rgba(37, 99, 235, 0.1);
       border-color: var(--primary);
     }
+    [data-theme="dark"] .filter-option.active {
+      background: rgba(59, 130, 246, 0.2);
+    }
+    .filter-option:focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: 2px;
+    }
 
     .filter-option .dot {
       width: 14px;
@@ -796,8 +859,8 @@
       bottom: calc(110px + var(--safe-bottom));
       left: 50%;
       transform: translateX(-50%) translateY(100px);
-      background: var(--gray-900);
-      color: white;
+      background: #1e293b;
+      color: #f8fafc;
       padding: 14px 28px;
       border-radius: 28px;
       font-size: 0.95rem;
@@ -809,6 +872,11 @@
       display: flex;
       align-items: center;
       gap: 10px;
+    }
+
+    [data-theme="dark"] .toast {
+      background: #f8fafc;
+      color: #1e293b;
     }
 
     .toast.visible {
@@ -865,6 +933,14 @@
       background: var(--bg-secondary);
     }
 
+    .menu-item:focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: 2px;
+    }
+    [data-theme="dark"] .menu-item:focus-visible {
+      outline-color: var(--primary-light);
+    }
+
     .menu-item svg {
       width: 24px;
       height: 24px;
@@ -906,6 +982,15 @@
     .empty-state p {
       font-size: 1rem;
     }
+
+    /* Reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -926,7 +1011,7 @@
       <div class="header-subtitle">BHLex Healthcare Simulation</div>
     </div>
     <div class="header-actions">
-      <button class="header-btn" onclick="toggleTheme()" title="Toggle theme">
+      <button class="header-btn" onclick="toggleTheme()" title="Toggle dark mode" aria-label="Toggle dark mode">
         <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="5"></circle>
           <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -983,7 +1068,7 @@
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
-          <input type="text" class="search-input-mobile" id="search-input" placeholder="Search competencies..." oninput="handleSearch()">
+          <input type="text" class="search-input-mobile" id="search-input" placeholder="Search competencies..." oninput="handleSearch()" aria-label="Search competencies" role="searchbox">
         </div>
       </div>
 
@@ -1050,35 +1135,35 @@
   </div>
 
   <!-- Bottom Navigation -->
-  <div class="bottom-nav">
-    <button class="nav-item active" data-view="home" onclick="switchView('home')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <nav class="bottom-nav" role="navigation" aria-label="Main navigation">
+    <button class="nav-item active" data-view="home" onclick="switchView('home')" aria-label="Home" aria-current="page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
         <polyline points="9 22 9 12 15 12 15 22"></polyline>
       </svg>
       <span>Home</span>
     </button>
-    <button class="nav-item" onclick="openFilterModal()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <button class="nav-item" onclick="openFilterModal()" aria-label="Filter competencies">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
       </svg>
       <span>Filter</span>
     </button>
-    <button class="nav-item" data-view="more" onclick="switchView('more')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <button class="nav-item" data-view="more" onclick="switchView('more')" aria-label="More options">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <circle cx="12" cy="12" r="1"></circle>
         <circle cx="12" cy="5" r="1"></circle>
         <circle cx="12" cy="19" r="1"></circle>
       </svg>
       <span>More</span>
     </button>
-  </div>
+  </nav>
 
   <!-- Filter Modal -->
-  <div class="modal-overlay" id="filter-modal" onclick="closeFilterModal(event)">
+  <div class="modal-overlay" id="filter-modal" onclick="closeFilterModal(event)" role="dialog" aria-modal="true" aria-labelledby="filter-modal-title">
     <div class="modal-content-mobile" onclick="event.stopPropagation()">
       <div class="modal-handle"></div>
-      <div class="modal-title">Filter by Status</div>
+      <h2 class="modal-title" id="filter-modal-title">Filter by Status</h2>
       <div class="filter-option active" data-filter="all" onclick="setFilter('all')">
         <span class="dot" style="background: linear-gradient(135deg, #3b82f6, #1e40af)"></span>
         <span class="filter-label">All Competencies</span>
@@ -1315,26 +1400,54 @@
     function switchView(view) {
       document.querySelectorAll('.section-view').forEach(v => v.classList.remove('active'));
       document.getElementById(`view-${view}`).classList.add('active');
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      document.querySelector(`[data-view="${view}"]`)?.classList.add('active');
+      document.querySelectorAll('.nav-item').forEach(n => {
+        n.classList.remove('active');
+        n.removeAttribute('aria-current');
+      });
+      const activeNav = document.querySelector(`[data-view="${view}"]`);
+      if (activeNav) {
+        activeNav.classList.add('active');
+        activeNav.setAttribute('aria-current', 'page');
+      }
     }
 
+    let previousFocusElement = null;
+
     function openFilterModal() {
-      document.getElementById('filter-modal').classList.add('active');
+      previousFocusElement = document.activeElement;
+      const modal = document.getElementById('filter-modal');
+      modal.classList.add('active');
+      // Focus first filter option after animation
+      setTimeout(() => {
+        modal.querySelector('.filter-option').focus();
+      }, 100);
     }
 
     function closeFilterModal(e) {
-      if (e.target.id === 'filter-modal') {
-        document.getElementById('filter-modal').classList.remove('active');
+      if (e && e.target && e.target.id !== 'filter-modal') return;
+      document.getElementById('filter-modal').classList.remove('active');
+      // Return focus to trigger element
+      if (previousFocusElement) {
+        previousFocusElement.focus();
       }
     }
+
+    // ESC key to close modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const modal = document.getElementById('filter-modal');
+        if (modal.classList.contains('active')) {
+          closeFilterModal();
+        }
+      }
+    });
 
     function setFilter(filter) {
       currentFilter = filter;
       document.querySelectorAll('.filter-option').forEach(opt => {
         opt.classList.toggle('active', opt.dataset.filter === filter);
       });
-      document.getElementById('filter-modal').classList.remove('active');
+      closeFilterModal();
       applyFilters();
     }
 
