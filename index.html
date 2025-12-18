@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Healthcare Simulation Competency Tracker for BHLex orientation">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Healthcare Simulation Competency Tracker</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --success: #16a34a;
+      --warning: #ca8a04;
+      --danger: #dc2626;
+      --purple: #7c3aed;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-500: #6b7280;
+      --gray-700: #374151;
+      --gray-900: #111827;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f3f4f6;
+      --text-primary: #111827;
+      --text-secondary: #6b7280;
+      --border-color: #e5e7eb;
+    }
+
+    [data-theme="dark"] {
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --success: #22c55e;
+      --warning: #eab308;
+      --danger: #ef4444;
+      --purple: #8b5cf6;
+      --gray-50: #1f2937;
+      --gray-100: #374151;
+      --gray-200: #4b5563;
+      --gray-300: #6b7280;
+      --gray-500: #9ca3af;
+      --gray-700: #d1d5db;
+      --gray-900: #f9fafb;
+      --bg-primary: #111827;
+      --bg-secondary: #1f2937;
+      --text-primary: #f9fafb;
+      --text-secondary: #9ca3af;
+      --border-color: #374151;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+    /* Search and Filter Bar */
+    .search-filter-bar {
+      background: var(--bg-primary);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 10px 14px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .filter-buttons {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 8px 14px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--text-secondary);
+    }
+
+    .filter-btn:hover { background: var(--gray-200); }
+    .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .filter-btn.active-pending { background: var(--gray-500); color: white; border-color: var(--gray-500); }
+    .filter-btn.active-in-process { background: var(--warning); color: white; border-color: var(--warning); }
+    .filter-btn.active-review { background: var(--purple); color: white; border-color: var(--purple); }
+    .filter-btn.active-completed { background: var(--success); color: white; border-color: var(--success); }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      padding: 10px;
+      border-radius: 50%;
+      border: none;
+      background: var(--bg-primary);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      cursor: pointer;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+
+    .theme-toggle:hover { transform: scale(1.1); }
+    .theme-toggle svg { width: 20px; height: 20px; color: var(--text-primary); }
+
+    /* Quick Stats Banner */
+    .quick-stats-banner {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--primary);
+      color: white;
+      padding: 8px 20px;
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      font-size: 0.85rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .quick-stat { display: flex; align-items: center; gap: 6px; }
+    .quick-stat-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .quick-stat-dot.pending { background: #9ca3af; }
+    .quick-stat-dot.in-process { background: #fbbf24; }
+    .quick-stat-dot.review { background: #a78bfa; }
+    .quick-stat-dot.completed { background: #4ade80; }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 24px 0;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    header h1 { font-size: 1.75rem; font-weight: 600; }
+    header p { opacity: 0.9; margin-top: 4px; }
+
+    .progress-overview {
+      background: var(--bg-primary);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .progress-overview h2 { font-size: 1.25rem; margin-bottom: 16px; color: var(--gray-700); }
+
+    .progress-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: var(--gray-50);
+      padding: 16px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-card .number { font-size: 1.75rem; font-weight: 700; color: var(--primary); }
+    .stat-card .label { color: var(--gray-500); font-size: 0.75rem; }
+    .stat-card.completed .number { color: var(--success); }
+    .stat-card.in-progress .number { color: var(--warning); }
+    .stat-card.review .number { color: var(--purple); }
+
+    .progress-bar-container {
+      background: var(--gray-200);
+      border-radius: 9999px;
+      height: 12px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      background: var(--success);
+      height: 100%;
+      border-radius: 9999px;
+      transition: width 0.3s ease;
+    }
+
+    .progress-text { text-align: right; font-size: 0.875rem; color: var(--gray-500); margin-top: 8px; }
+
+    .nav-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+      background: var(--bg-primary);
+      padding: 12px;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .nav-tab {
+      padding: 10px 20px;
+      border: none;
+      background: var(--gray-100);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--gray-700);
+      transition: all 0.2s;
+    }
+
+    .nav-tab:hover { background: var(--gray-200); }
+    .nav-tab.active { background: var(--primary); color: white; }
+    .nav-tab .tab-progress { display: inline-block; margin-left: 8px; font-size: 0.75rem; opacity: 0.8; }
+
+    .category-section {
+      background: var(--bg-primary);
+      border-radius: 12px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .category-section.hidden { display: none; }
+    .competency-item.hidden { display: none; }
+
+    .category-header {
+      background: var(--gray-50);
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-color);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .category-header:hover { background: var(--gray-100); }
+    .category-header h3 { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
+
+    .category-progress { display: flex; align-items: center; gap: 12px; }
+
+    .category-progress-bar {
+      width: 100px;
+      height: 6px;
+      background: var(--gray-200);
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+
+    .category-progress-bar .fill { height: 100%; background: var(--success); border-radius: 9999px; }
+    .category-progress-text { font-size: 0.875rem; color: var(--gray-500); min-width: 45px; }
+
+    .chevron { transition: transform 0.2s; }
+    .category-section.collapsed .chevron { transform: rotate(-90deg); }
+    .category-content { padding: 0; }
+    .category-section.collapsed .category-content { display: none; }
+
+    .competency-item { border-bottom: 1px solid var(--border-color); padding: 20px; }
+    .competency-item:last-child { border-bottom: none; }
+
+    .competency-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
+    .competency-statement { font-weight: 600; color: var(--text-primary); flex: 1; font-size: 1rem; }
+    .competency-statement mark { background: #fef08a; padding: 0 2px; border-radius: 2px; }
+
+    .status-selector { display: flex; gap: 4px; flex-shrink: 0; }
+
+    .status-option {
+      padding: 6px 12px;
+      border: 2px solid var(--border-color);
+      background: var(--bg-primary);
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--text-secondary);
+    }
+
+    .status-option:hover { border-color: var(--gray-400); }
+    .status-option.pending.active { background: var(--gray-100); border-color: var(--gray-500); color: var(--gray-700); }
+    .status-option.in-process.active { background: #fef3c7; border-color: var(--warning); color: #92400e; }
+    .status-option.review.active { background: #ede9fe; border-color: var(--purple); color: #5b21b6; }
+    .status-option.completed.active { background: #dcfce7; border-color: var(--success); color: #166534; }
+
+    .verification-methods { margin-top: 12px; }
+
+    .verification-method {
+      background: var(--gray-50);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+      border-left: 4px solid var(--gray-300);
+    }
+
+    .verification-method.has-content { border-left-color: var(--success); }
+
+    .verification-method-text {
+      font-size: 0.9rem;
+      color: var(--gray-700);
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    /* Entry Form */
+    .entry-form {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    .entry-input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.875rem;
+      resize: vertical;
+      min-height: 60px;
+      font-family: inherit;
+      margin-bottom: 10px;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    .entry-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .entry-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .entry-type-select {
+      padding: 8px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.875rem;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+
+    .entry-type-select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .checkbox-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.875rem;
+      color: var(--gray-700);
+    }
+
+    .checkbox-wrapper input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .btn-save-entry {
+      padding: 8px 16px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-save-entry:hover { background: var(--primary-dark); }
+
+    /* Entries List */
+    .entries-list {
+      margin-top: 12px;
+    }
+
+    .entry-item {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .entry-item.notes-type { border-left: 3px solid var(--primary); }
+    .entry-item.evidence-type { border-left: 3px solid var(--success); }
+
+    .entry-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .entry-icon.notes { color: var(--primary); }
+    .entry-icon.evidence { color: var(--success); }
+
+    .entry-content { flex: 1; }
+    .entry-text { font-size: 0.875rem; color: var(--text-primary); margin-bottom: 4px; }
+
+    .entry-meta {
+      font-size: 0.7rem;
+      color: var(--gray-500);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .entry-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .entry-badge.record { background: #dcfce7; color: #166534; }
+    .entry-badge.not-record { background: var(--gray-100); color: var(--gray-500); }
+
+    .entry-delete {
+      color: var(--danger);
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 0 4px;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+
+    .entry-delete:hover { opacity: 1; }
+
+    /* File Upload */
+    .file-upload-section { margin-top: 12px; }
+
+    .evidence-upload {
+      border: 2px dashed var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--bg-primary);
+    }
+
+    .evidence-upload:hover { border-color: var(--primary); background: var(--gray-50); }
+    .evidence-upload.has-files { border-color: var(--success); border-style: solid; }
+
+    .upload-icon { width: 24px; height: 24px; margin: 0 auto 4px; color: var(--gray-400); }
+    .upload-text { font-size: 0.8rem; color: var(--gray-600); }
+    .upload-hint { font-size: 0.7rem; color: var(--gray-400); margin-top: 2px; }
+    .file-input { display: none; }
+
+    .uploaded-files { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--gray-100);
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+    }
+
+    .file-item .file-name {
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .file-item .remove-file { color: var(--danger); cursor: pointer; font-weight: bold; }
+    .file-item .view-file { color: var(--primary); cursor: pointer; text-decoration: underline; }
+
+    .date-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .date-input {
+      padding: 8px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.875rem;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    .input-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+      padding: 20px;
+      background: var(--bg-primary);
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-secondary { background: var(--gray-200); color: var(--gray-700); }
+    .btn-secondary:hover { background: var(--gray-300); }
+    .btn-success { background: var(--success); color: white; }
+    .btn-success:hover { background: #15803d; }
+    .btn-danger { background: var(--danger); color: white; }
+
+    .save-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--success);
+      font-size: 0.875rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+      margin-left: auto;
+    }
+
+    .save-indicator.visible { opacity: 1; }
+
+    .note {
+      font-size: 0.8rem;
+      color: var(--gray-500);
+      font-style: italic;
+      padding: 12px 20px;
+      background: #fffbeb;
+      border-left: 3px solid var(--warning);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal.active { display: flex; }
+
+    .modal-content {
+      background: var(--bg-primary);
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 90%;
+      max-height: 90%;
+      overflow: auto;
+      color: var(--text-primary);
+    }
+
+    .modal-content img { max-width: 100%; max-height: 70vh; }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 12px; }
+      .progress-stats { grid-template-columns: repeat(2, 1fr); }
+      .nav-tabs { gap: 4px; }
+      .nav-tab { padding: 8px 12px; font-size: 0.8rem; }
+      .category-progress-bar { width: 60px; }
+      .status-selector { flex-wrap: wrap; }
+      .status-option { padding: 4px 8px; font-size: 0.7rem; }
+      .competency-header { flex-direction: column; }
+      .entry-controls { flex-direction: column; align-items: stretch; }
+      .theme-toggle { top: 10px; right: 10px; width: 38px; height: 38px; }
+      .quick-stats-banner { flex-wrap: wrap; gap: 12px; padding: 8px 12px; }
+      .search-filter-bar { flex-direction: column; }
+      .filter-buttons { width: 100%; justify-content: center; }
+    }
+
+    /* Print Styles */
+    @media print {
+      body { background: white; color: black; }
+      .theme-toggle, .quick-stats-banner, .search-filter-bar,
+      .actions, .entry-form, .evidence-upload, .file-upload-section,
+      .nav-tabs { display: none !important; }
+      .category-section { break-inside: avoid; }
+      .competency-item { break-inside: avoid; page-break-inside: avoid; }
+      .category-section.collapsed .category-content { display: block !important; }
+      .status-selector { display: none; }
+      .status-badge-print { display: inline-block !important; }
+      header { background: #2563eb !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+    .status-badge-print {
+      display: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    /* Keyboard shortcut hints */
+    .keyboard-hint {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--bg-primary);
+      padding: 12px 16px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      z-index: 100;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+
+    .keyboard-hint.visible { opacity: 1; }
+    .keyboard-hint kbd {
+      background: var(--gray-100);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      margin: 0 2px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Theme Toggle Button -->
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode (Ctrl+D)">
+    <svg id="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg id="theme-icon-moon" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </button>
+
+  <!-- Quick Stats Banner -->
+  <div class="quick-stats-banner" id="quick-stats-banner">
+    <div class="quick-stat"><span class="quick-stat-dot pending"></span><span id="qs-pending">0</span> Pending</div>
+    <div class="quick-stat"><span class="quick-stat-dot in-process"></span><span id="qs-in-process">0</span> In Process</div>
+    <div class="quick-stat"><span class="quick-stat-dot review"></span><span id="qs-review">0</span> Review</div>
+    <div class="quick-stat"><span class="quick-stat-dot completed"></span><span id="qs-completed">0</span> Complete</div>
+  </div>
+
+  <header>
+    <div class="container">
+      <h1>Healthcare Simulation Competency Tracker</h1>
+      <p>BHLex - Track your orientation progress and competencies</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Search and Filter Bar -->
+    <div class="search-filter-bar">
+      <input type="text" class="search-input" id="search-input" placeholder="Search competencies... (Ctrl+F)" oninput="handleSearch()">
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">All</button>
+        <button class="filter-btn" data-filter="pending" onclick="setFilter('pending')">Pending</button>
+        <button class="filter-btn" data-filter="in-process" onclick="setFilter('in-process')">In Process</button>
+        <button class="filter-btn" data-filter="review" onclick="setFilter('review')">Review</button>
+        <button class="filter-btn" data-filter="completed" onclick="setFilter('completed')">Completed</button>
+      </div>
+    </div>
+
+    <div class="progress-overview">
+      <h2>Overall Progress</h2>
+      <div class="progress-stats">
+        <div class="stat-card">
+          <div class="number" id="total-count">0</div>
+          <div class="label">Total</div>
+        </div>
+        <div class="stat-card">
+          <div class="number" id="pending-count">0</div>
+          <div class="label">Pending</div>
+        </div>
+        <div class="stat-card in-progress">
+          <div class="number" id="in-process-count">0</div>
+          <div class="label">In Process</div>
+        </div>
+        <div class="stat-card review">
+          <div class="number" id="review-count">0</div>
+          <div class="label">Ready for Review</div>
+        </div>
+        <div class="stat-card completed">
+          <div class="number" id="completed-count">0</div>
+          <div class="label">Completed</div>
+        </div>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="overall-progress" style="width: 0%"></div>
+      </div>
+      <div class="progress-text"><span id="progress-percent">0</span>% Complete</div>
+    </div>
+
+    <div class="nav-tabs" id="nav-tabs"></div>
+    <div id="content"></div>
+
+    <div class="actions">
+      <button class="btn btn-success" onclick="exportPDF()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+        </svg>
+        Export PDF
+      </button>
+      <button class="btn btn-primary" onclick="exportData()">Export JSON</button>
+      <button class="btn btn-secondary" onclick="importData()">Import JSON</button>
+      <button class="btn btn-danger" onclick="resetProgress()">Reset All</button>
+      <span class="save-indicator" id="save-indicator">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        Saved
+      </span>
+    </div>
+  </div>
+
+  <input type="file" id="import-input" style="display: none" accept=".json" onchange="handleImport(event)">
+
+  <div class="modal" id="file-modal" onclick="closeModal(event)">
+    <span class="modal-close" onclick="closeModal()">&times;</span>
+    <div class="modal-content" id="modal-content"></div>
+  </div>
+
+  <!-- Keyboard Hint -->
+  <div class="keyboard-hint" id="keyboard-hint">
+    <kbd>Ctrl</kbd>+<kbd>D</kbd> Toggle dark mode &nbsp;|&nbsp;
+    <kbd>Ctrl</kbd>+<kbd>F</kbd> Search &nbsp;|&nbsp;
+    <kbd>Esc</kbd> Clear search
+  </div>
+
+  <script>
+    const competencyData = {
+      "title": "Healthcare Simulation Competency Tracker",
+      "organization": "BHLex",
+      "essenceOfJob": [
+        {
+          "id": "coordination",
+          "name": "Coordination",
+          "categories": [
+            {
+              "id": "coord-1",
+              "number": 1,
+              "name": "Coordination of Healthcare Simulation",
+              "competencies": [
+                {"id": "coord-1-1", "statement": "Demonstrate knowledge of healthcare simulation", "verificationMethods": ["Complete a course that reviews standards, core competencies, and best practices in healthcare simulation"]},
+                {"id": "coord-1-2", "statement": "Demonstrate technical ability to maintain and utilize simulation equipment", "verificationMethods": ["Return demonstration of turning on and off simulators"]},
+                {"id": "coord-1-3", "statement": "Conduct learning needs assessment", "verificationMethods": ["Gather data and present at ERC"]},
+                {"id": "coord-1-4", "statement": "Demonstrate scheduling of simulation lab", "verificationMethods": ["Return demonstration of scheduling software"]},
+                {"id": "coord-1-5", "statement": "Review Simulation Dictionary", "verificationMethods": ["Return demonstration of running simulator program during healthcare simulation"]},
+                {"id": "coord-1-6", "statement": "Analyze data and present at ERC", "verificationMethods": ["Present to education department and ERC procedure for scheduling simulation events in the simulation lab"]},
+                {"id": "coord-1-7", "statement": "Review Healthcare simulation standards of best practice", "verificationMethods": ["Identify resources for troubleshooting simulation equipment"]},
+                {"id": "coord-1-8", "statement": "Shadow simulation technician at another facility", "verificationMethods": []}
+              ]
+            },
+            {
+              "id": "coord-2",
+              "number": 2,
+              "name": "Coordination of Allied Health Education",
+              "note": "Will include but not limited to EMS, respiratory, PT/OT, radiology, and laboratory departments",
+              "competencies": [
+                {"id": "coord-2-1", "statement": "Demonstrates knowledge of adult learning principles", "verificationMethods": ["Complete a course covering adult learning theory"]},
+                {"id": "coord-2-2", "statement": "Facilitates formal and informal learning activities", "verificationMethods": ["Submit 2 peer reviews of facilitation of learning activities"]},
+                {"id": "coord-2-3", "statement": "Conduct learning needs assessment", "verificationMethods": ["Gather data and present at ERC"]},
+                {"id": "coord-2-4", "statement": "Demonstrate understanding of experiential learning", "verificationMethods": ["Provide an example of using experiential learning in education activities"]},
+                {"id": "coord-2-5", "statement": "Review Adult Learning Theory", "verificationMethods": ["Analyze data and present at ERC"]},
+                {"id": "coord-2-6", "statement": "Review androgogy", "verificationMethods": []}
+              ]
+            }
+          ]
+        },
+        {
+          "id": "communication",
+          "name": "Communication",
+          "categories": [
+            {"id": "comm-1", "number": 1, "name": "Communication with Education Department", "competencies": [
+              {"id": "comm-1-1", "statement": "Understand team dynamics", "verificationMethods": ["Attend department staff meeting and PDS meeting", "Meet with each member of the education department"]},
+              {"id": "comm-1-2", "statement": "Demonstrated the ability to write a professional email", "verificationMethods": ["Submit 2 examples of professional emails to team"]}
+            ]},
+            {"id": "comm-2", "number": 2, "name": "Communication with Allied Health Staff and Leadership", "competencies": [
+              {"id": "comm-2-1", "statement": "Demonstrate active listening", "verificationMethods": ["Peer evaluation"]},
+              {"id": "comm-2-2", "statement": "Effective questioning and feedback", "verificationMethods": ["Peer evaluation"]},
+              {"id": "comm-2-3", "statement": "Utilizes emotional intelligence", "verificationMethods": ["Provide examples of emotional intelligence: self-awareness, motivation, self-regulation, social awareness and empathy, social skills"]}
+            ]},
+            {"id": "comm-3", "number": 3, "name": "Communication with users of the simulation", "competencies": [
+              {"id": "comm-3-1", "statement": "Demonstrate customer service skills", "verificationMethods": ["Provide examples of being approachable", "Provide examples of being accessible"]},
+              {"id": "comm-3-2", "statement": "Demonstrate conflict resolution skills", "verificationMethods": ["Submit an exemplar of conflict resolution"]}
+            ]},
+            {"id": "comm-4", "number": 4, "name": "Communication with vendors", "competencies": [
+              {"id": "comm-4-1", "statement": "Demonstrates establishing clear expectations, fostering open dialogue, and maintaining regular and proactive communication with vendors", "verificationMethods": ["Provide examples of communication with vendors"]}
+            ]}
+          ]
+        },
+        {
+          "id": "manage",
+          "name": "Manage",
+          "categories": [
+            {"id": "manage-1", "number": 1, "name": "Manage simulation equipment", "competencies": [
+              {"id": "manage-1-1", "statement": "Maintaining simulation lab equipment to ensure ability to function", "verificationMethods": ["Shadow simulation technician at another facility", "Maintain an inventory of all equipment for simulation lab", "Create an inventory of all simulation equipment"]},
+              {"id": "manage-1-2", "statement": "Demonstrate what equipment is in working order and what needs to be repaired", "verificationMethods": []},
+              {"id": "manage-1-3", "statement": "Demonstrate how to contact company technical support to troubleshoot equipment", "verificationMethods": []},
+              {"id": "manage-1-4", "statement": "Demonstrate the ability to update software for simulator equipment", "verificationMethods": []}
+            ]},
+            {"id": "manage-2", "number": 2, "name": "Manage usage of simulation lab", "competencies": [
+              {"id": "manage-2-1", "statement": "Track participant usage of simulation lab", "verificationMethods": ["Create a method to track usage of simulation lab", "Track usage of simulation equipment", "Create a method for tracking usage of simulation equipment"]}
+            ]},
+            {"id": "manage-3", "number": 3, "name": "Manage outcomes", "competencies": [
+              {"id": "manage-3-1", "statement": "Implement evaluation of simulation events", "verificationMethods": ["Create a survey to evaluate each simulation event"]}
+            ]},
+            {"id": "manage-4", "number": 4, "name": "Manage Supplies", "competencies": [
+              {"id": "manage-4-1", "statement": "Demonstrate principles of supply chain", "verificationMethods": ["Create a list of supply inventory", "Monitor usage of supplies", "Create a method to track usage of supplies"]},
+              {"id": "manage-4-2", "statement": "Order supplies as needed", "verificationMethods": ["Submit supply order requisition"]}
+            ]},
+            {"id": "manage-5", "number": 5, "name": "Manage LMS", "competencies": [
+              {"id": "manage-5-1", "statement": "Understanding of LMS system", "verificationMethods": ["Transcript of training"]}
+            ]}
+          ]
+        },
+        {
+          "id": "advocate",
+          "name": "Advocate",
+          "categories": [
+            {"id": "advocate-1", "number": 1, "name": "Promote usage of healthcare simulation", "competencies": [
+              {"id": "advocate-1-1", "statement": "Articulates the benefits of healthcare simulation", "verificationMethods": ["Submit evidence of meeting with simulation stakeholders (educators)"]}
+            ]},
+            {"id": "advocate-2", "number": 2, "name": "Advocate for evidence-based use of healthcare simulation", "competencies": [
+              {"id": "advocate-2-1", "statement": "Understands simulation methodologies, principles, and best practice", "verificationMethods": ["Submit documentation of meeting with healthcare simulation users to instruct on healthcare simulation"]}
+            ]},
+            {"id": "advocate-3", "number": 3, "name": "Advocate for Allied health staff education", "competencies": [
+              {"id": "advocate-3-1", "statement": "Knowledge of policies, procedures, and quality improvement initiatives in Allied Health", "verificationMethods": ["Submit documentation of meeting with allied health leaders"]}
+            ]}
+          ]
+        },
+        {
+          "id": "collaborate",
+          "name": "Collaborate",
+          "categories": [
+            {"id": "collab-1", "number": 1, "name": "Collaborate with users of simulation lab", "competencies": [
+              {"id": "collab-1-1", "statement": "Demonstrate ability to set up for simulation event based on collaboration with staff that requested the event", "verificationMethods": ["Provide an example of simulation set up based on staff provided information"]}
+            ]},
+            {"id": "collab-2", "number": 2, "name": "Collaborate with Allied Health leaders and staff", "competencies": [
+              {"id": "collab-2-1", "statement": "Identifies Allied health leadership", "verificationMethods": ["Submit evidence of meeting with Allied health leaders"]},
+              {"id": "collab-2-2", "statement": "Ensures collaboration and communication with Allied health staff and leadership", "verificationMethods": ["Provide an example of collaboration with allied health staff and leadership"]}
+            ]}
+          ]
+        },
+        {
+          "id": "oversite",
+          "name": "Oversite",
+          "categories": [
+            {"id": "oversite-1", "number": 1, "name": "Oversee simulation program at BHLex", "competencies": [
+              {"id": "oversite-1-1", "statement": "Oversee daily operation of the simulation center", "verificationMethods": ["Submit example of daily operation including scheduling and ensuring adequate supplies"]},
+              {"id": "oversite-1-2", "statement": "Provide technical support for simulation equipment and programs", "verificationMethods": ["Submit an example of troubleshooting equipment issue"]},
+              {"id": "oversite-1-3", "statement": "Maintain safety and security of equipment and participants", "verificationMethods": ["Submit an example of how security of equipment is completed", "Submit an example of how participant safety (psychological safety) is promoted"]}
+            ]},
+            {"id": "oversite-2", "number": 2, "name": "Oversee Allied Health Education at BHLex", "competencies": [
+              {"id": "oversite-2-1", "statement": "Oversees allied health staff development", "verificationMethods": ["Submit an example of a method used to educate allied health staff"]},
+              {"id": "oversite-2-2", "statement": "Create a supportive learning environment", "verificationMethods": ["Submit an example of a method used to create a supportive learning environment such as resources used"]},
+              {"id": "oversite-2-3", "statement": "Ensures education for quality and accreditation is completed", "verificationMethods": ["Submit an example of ensuring compliance with accreditation standards and quality metrics"]}
+            ]}
+          ]
+        },
+        {
+          "id": "innovate",
+          "name": "Innovate",
+          "categories": [
+            {"id": "innovate-1", "number": 1, "name": "Think outside the box", "competencies": [
+              {"id": "innovate-1-1", "statement": "Demonstrates ability to challenge conventional approaches", "verificationMethods": ["Submit an example of an innovative solution that drives improvement"]},
+              {"id": "innovate-1-2", "statement": "Demonstrates creative problem solving", "verificationMethods": ["Submit an example of a unique approach to overcome a challenge"]}
+            ]},
+            {"id": "innovate-2", "number": 2, "name": "Collaborate with Allied health leaders to provide innovative opportunities for education", "competencies": [
+              {"id": "innovate-2-1", "statement": "Demonstrates ability to take in diverse perspectives", "verificationMethods": ["Submit an example of a solution that utilized different perspectives"]},
+              {"id": "innovate-2-2", "statement": "Demonstrates the ability to adapt as needed", "verificationMethods": ["Submit an example of adapting"]}
+            ]}
+          ]
+        }
+      ]
+    };
+
+    let progress = {};
+    let currentSection = null;
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    const STATUS_OPTIONS = ['pending', 'in-process', 'review', 'completed'];
+    const STATUS_LABELS = {
+      'pending': 'Pending',
+      'in-process': 'In Process',
+      'review': 'Ready for Review',
+      'completed': 'Completed'
+    };
+
+    // Theme Management
+    function initTheme() {
+      const savedTheme = localStorage.getItem('competency-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      updateThemeIcon(savedTheme);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const newTheme = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('competency-theme', newTheme);
+      updateThemeIcon(newTheme);
+    }
+
+    function updateThemeIcon(theme) {
+      const sunIcon = document.getElementById('theme-icon-sun');
+      const moonIcon = document.getElementById('theme-icon-moon');
+      if (theme === 'dark') {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+      } else {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+      }
+    }
+
+    // Search and Filter
+    function handleSearch() {
+      searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
+      applyFilters();
+    }
+
+    function setFilter(filter) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active', 'active-pending', 'active-in-process', 'active-review', 'active-completed');
+        if (btn.dataset.filter === filter) {
+          if (filter === 'all') btn.classList.add('active');
+          else btn.classList.add(`active-${filter}`);
+        }
+      });
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const competencyItems = document.querySelectorAll('.competency-item');
+      const categorySections = document.querySelectorAll('.category-section');
+
+      competencyItems.forEach(item => {
+        const compId = item.dataset.compId;
+        const status = getCompetencyStatus(compId);
+        const text = item.querySelector('.competency-statement').textContent.toLowerCase();
+
+        const matchesFilter = currentFilter === 'all' || status === currentFilter;
+        const matchesSearch = searchQuery === '' || text.includes(searchQuery);
+
+        if (matchesFilter && matchesSearch) {
+          item.classList.remove('hidden');
+          // Highlight search terms
+          if (searchQuery) {
+            const statement = item.querySelector('.competency-statement');
+            const originalText = statement.textContent;
+            const regex = new RegExp(`(${searchQuery})`, 'gi');
+            statement.innerHTML = originalText.replace(regex, '<mark>$1</mark>');
+          }
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+
+      // Hide categories with no visible competencies
+      categorySections.forEach(section => {
+        const visibleItems = section.querySelectorAll('.competency-item:not(.hidden)');
+        if (visibleItems.length === 0) {
+          section.classList.add('hidden');
+        } else {
+          section.classList.remove('hidden');
+        }
+      });
+    }
+
+    function clearSearch() {
+      document.getElementById('search-input').value = '';
+      searchQuery = '';
+      applyFilters();
+      // Remove highlights
+      document.querySelectorAll('.competency-statement mark').forEach(mark => {
+        mark.outerHTML = mark.textContent;
+      });
+    }
+
+    // Keyboard Shortcuts
+    function initKeyboardShortcuts() {
+      document.addEventListener('keydown', (e) => {
+        // Ctrl+D - Toggle dark mode
+        if (e.ctrlKey && e.key === 'd') {
+          e.preventDefault();
+          toggleTheme();
+        }
+        // Ctrl+F - Focus search
+        if (e.ctrlKey && e.key === 'f') {
+          e.preventDefault();
+          document.getElementById('search-input').focus();
+        }
+        // Escape - Clear search
+        if (e.key === 'Escape') {
+          clearSearch();
+          document.getElementById('search-input').blur();
+        }
+        // Show keyboard hint on Ctrl hold
+        if (e.key === 'Control') {
+          document.getElementById('keyboard-hint').classList.add('visible');
+        }
+      });
+
+      document.addEventListener('keyup', (e) => {
+        if (e.key === 'Control') {
+          document.getElementById('keyboard-hint').classList.remove('visible');
+        }
+      });
+    }
+
+    // Quick Stats Update
+    function updateQuickStats(pending, inProcess, review, completed) {
+      document.getElementById('qs-pending').textContent = pending;
+      document.getElementById('qs-in-process').textContent = inProcess;
+      document.getElementById('qs-review').textContent = review;
+      document.getElementById('qs-completed').textContent = completed;
+    }
+
+    function init() {
+      initTheme();
+      initKeyboardShortcuts();
+      loadProgress();
+      renderTabs();
+      if (competencyData.essenceOfJob.length > 0) {
+        currentSection = competencyData.essenceOfJob[0].id;
+        renderContent();
+      }
+      updateStats();
+    }
+
+    function loadProgress() {
+      const saved = localStorage.getItem('competency-progress-v3');
+      if (saved) progress = JSON.parse(saved);
+    }
+
+    function saveProgress() {
+      localStorage.setItem('competency-progress-v3', JSON.stringify(progress));
+      showSaveIndicator();
+    }
+
+    function showSaveIndicator() {
+      const indicator = document.getElementById('save-indicator');
+      indicator.classList.add('visible');
+      setTimeout(() => indicator.classList.remove('visible'), 2000);
+    }
+
+    function renderTabs() {
+      const container = document.getElementById('nav-tabs');
+      container.innerHTML = competencyData.essenceOfJob.map(section => {
+        const stats = getSectionStats(section);
+        return `<button class="nav-tab ${currentSection === section.id ? 'active' : ''}" onclick="switchSection('${section.id}')">${section.name}<span class="tab-progress">${stats.completed}/${stats.total}</span></button>`;
+      }).join('');
+    }
+
+    function getSectionStats(section) {
+      let total = 0, completed = 0;
+      section.categories.forEach(cat => {
+        cat.competencies.forEach(comp => {
+          total++;
+          if (getCompetencyStatus(comp.id) === 'completed') completed++;
+        });
+      });
+      return { total, completed };
+    }
+
+    function switchSection(sectionId) {
+      currentSection = sectionId;
+      renderTabs();
+      renderContent();
+    }
+
+    function renderContent() {
+      const section = competencyData.essenceOfJob.find(s => s.id === currentSection);
+      if (!section) return;
+
+      const container = document.getElementById('content');
+      container.innerHTML = section.categories.map(category => {
+        const categoryStats = getCategoryStats(category);
+        return `
+          <div class="category-section" id="category-${category.id}">
+            <div class="category-header" onclick="toggleCategory('${category.id}')">
+              <h3>Category ${category.number}: ${category.name}</h3>
+              <div class="category-progress">
+                <div class="category-progress-bar"><div class="fill" style="width: ${categoryStats.percent}%"></div></div>
+                <span class="category-progress-text">${categoryStats.completed}/${categoryStats.total}</span>
+                <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </div>
+            </div>
+            <div class="category-content">
+              ${category.note ? `<p class="note">${category.note}</p>` : ''}
+              ${category.competencies.map(comp => renderCompetency(comp)).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function getCategoryStats(category) {
+      let total = category.competencies.length, completed = 0;
+      category.competencies.forEach(comp => {
+        if (getCompetencyStatus(comp.id) === 'completed') completed++;
+      });
+      return { total, completed, percent: total > 0 ? Math.round((completed / total) * 100) : 0 };
+    }
+
+    function renderCompetency(comp) {
+      const status = getCompetencyStatus(comp.id);
+      const data = progress[comp.id] || {};
+
+      return `
+        <div class="competency-item" data-comp-id="${comp.id}">
+          <div class="competency-header">
+            <div class="competency-statement">${comp.statement}</div>
+            <span class="status-badge-print" style="background: ${status === 'completed' ? '#dcfce7' : status === 'review' ? '#ede9fe' : status === 'in-process' ? '#fef3c7' : '#f3f4f6'}; color: ${status === 'completed' ? '#166534' : status === 'review' ? '#5b21b6' : status === 'in-process' ? '#92400e' : '#374151'}">${STATUS_LABELS[status]}</span>
+            <div class="status-selector">
+              ${STATUS_OPTIONS.map(opt => `<button class="status-option ${opt} ${status === opt ? 'active' : ''}" onclick="setStatus('${comp.id}', '${opt}')">${STATUS_LABELS[opt]}</button>`).join('')}
+            </div>
+          </div>
+          <div class="verification-methods">
+            ${comp.verificationMethods.length > 0 ?
+              comp.verificationMethods.map((method, idx) => renderVerificationMethod(comp.id, method, idx, data)).join('') :
+              renderVerificationMethod(comp.id, 'General documentation', 0, data)
+            }
+            <div class="date-row">
+              <label class="input-label" style="margin-bottom: 0;">Date Completed:</label>
+              <input type="date" class="date-input" value="${data.dateCompleted || ''}" onchange="updateDate('${comp.id}', this.value)">
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderVerificationMethod(compId, method, idx, data) {
+      const entries = data.entries?.[idx] || [];
+      const files = data.files?.[idx] || [];
+      const hasContent = entries.length > 0 || files.length > 0;
+
+      return `
+        <div class="verification-method ${hasContent ? 'has-content' : ''}">
+          <div class="verification-method-text">${method}</div>
+
+          <div class="entry-form">
+            <textarea class="entry-input" id="entry-input-${compId}-${idx}" placeholder="Type your notes or evidence description..."></textarea>
+            <div class="entry-controls">
+              <select class="entry-type-select" id="entry-type-${compId}-${idx}">
+                <option value="notes">Notes</option>
+                <option value="evidence">Evidence</option>
+              </select>
+              <label class="checkbox-wrapper">
+                <input type="checkbox" id="entry-record-${compId}-${idx}" checked>
+                Save to Record?
+              </label>
+              <button class="btn-save-entry" onclick="addEntry('${compId}', ${idx})">Save Entry</button>
+            </div>
+          </div>
+
+          <div class="entries-list">
+            ${entries.map((entry, entryIdx) => `
+              <div class="entry-item ${entry.type}-type">
+                <svg class="entry-icon ${entry.type}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  ${entry.type === 'notes' ? '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line>' : '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>'}
+                </svg>
+                <div class="entry-content">
+                  <div class="entry-text">${entry.text}</div>
+                  <div class="entry-meta">
+                    <span>${new Date(entry.timestamp).toLocaleString()}</span>
+                    <span class="entry-badge ${entry.saveToRecord ? 'record' : 'not-record'}">${entry.saveToRecord ? 'In Record' : 'Not in Record'}</span>
+                  </div>
+                </div>
+                <span class="entry-delete" onclick="deleteEntry('${compId}', ${idx}, ${entryIdx})">&times;</span>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="file-upload-section">
+            <div class="evidence-upload ${files.length > 0 ? 'has-files' : ''}" onclick="document.getElementById('file-${compId}-${idx}').click()">
+              <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              <div class="upload-text">${files.length > 0 ? `${files.length} file(s) attached` : 'Click to attach files'}</div>
+              <div class="upload-hint">Images, PDFs, documents</div>
+            </div>
+            <input type="file" class="file-input" id="file-${compId}-${idx}" accept="image/*,.pdf,.doc,.docx,.txt" multiple onchange="handleFileUpload('${compId}', ${idx}, event)">
+            ${files.length > 0 ? `
+              <div class="uploaded-files">
+                ${files.map((file, fileIdx) => `
+                  <div class="file-item">
+                    <span class="file-name">${file.name}</span>
+                    <span class="view-file" onclick="viewFile('${compId}', ${idx}, ${fileIdx})">View</span>
+                    <span class="remove-file" onclick="removeFile('${compId}', ${idx}, ${fileIdx})">&times;</span>
+                  </div>
+                `).join('')}
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    function getCompetencyStatus(compId) {
+      return progress[compId]?.status || 'pending';
+    }
+
+    function setStatus(compId, status) {
+      if (!progress[compId]) progress[compId] = { status: 'pending', entries: [], files: [], dateCompleted: '' };
+      progress[compId].status = status;
+      if (status === 'completed' && !progress[compId].dateCompleted) {
+        progress[compId].dateCompleted = new Date().toISOString().split('T')[0];
+      }
+      saveProgress();
+      renderContent();
+      renderTabs();
+      updateStats();
+    }
+
+    function addEntry(compId, idx) {
+      const input = document.getElementById(`entry-input-${compId}-${idx}`);
+      const typeSelect = document.getElementById(`entry-type-${compId}-${idx}`);
+      const recordCheck = document.getElementById(`entry-record-${compId}-${idx}`);
+
+      const text = input.value.trim();
+      if (!text) return;
+
+      if (!progress[compId]) progress[compId] = { status: 'pending', entries: [], files: [], dateCompleted: '' };
+      if (!progress[compId].entries) progress[compId].entries = [];
+      if (!progress[compId].entries[idx]) progress[compId].entries[idx] = [];
+
+      progress[compId].entries[idx].push({
+        text: text,
+        type: typeSelect.value,
+        saveToRecord: recordCheck.checked,
+        timestamp: new Date().toISOString()
+      });
+
+      saveProgress();
+      input.value = '';
+      renderContent();
+    }
+
+    function deleteEntry(compId, methodIdx, entryIdx) {
+      if (progress[compId]?.entries?.[methodIdx]) {
+        progress[compId].entries[methodIdx].splice(entryIdx, 1);
+        saveProgress();
+        renderContent();
+      }
+    }
+
+    function updateDate(compId, value) {
+      if (!progress[compId]) progress[compId] = { status: 'pending', entries: [], files: [], dateCompleted: '' };
+      progress[compId].dateCompleted = value;
+      saveProgress();
+    }
+
+    function handleFileUpload(compId, idx, event) {
+      const files = event.target.files;
+      if (!files.length) return;
+
+      if (!progress[compId]) progress[compId] = { status: 'pending', entries: [], files: [], dateCompleted: '' };
+      if (!progress[compId].files) progress[compId].files = [];
+      if (!progress[compId].files[idx]) progress[compId].files[idx] = [];
+
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          progress[compId].files[idx].push({ name: file.name, type: file.type, data: e.target.result });
+          saveProgress();
+          renderContent();
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function removeFile(compId, methodIdx, fileIdx) {
+      if (progress[compId]?.files?.[methodIdx]) {
+        progress[compId].files[methodIdx].splice(fileIdx, 1);
+        saveProgress();
+        renderContent();
+      }
+    }
+
+    function viewFile(compId, methodIdx, fileIdx) {
+      const file = progress[compId]?.files?.[methodIdx]?.[fileIdx];
+      if (!file) return;
+
+      const modal = document.getElementById('file-modal');
+      const content = document.getElementById('modal-content');
+
+      if (file.type.startsWith('image/')) {
+        content.innerHTML = `<img src="${file.data}" alt="${file.name}">`;
+      } else if (file.type === 'application/pdf') {
+        content.innerHTML = `<iframe src="${file.data}" width="800" height="600"></iframe>`;
+      } else {
+        content.innerHTML = `<p>File: ${file.name}</p><a href="${file.data}" download="${file.name}">Download</a>`;
+      }
+      modal.classList.add('active');
+    }
+
+    function closeModal(event) {
+      if (!event || event.target.classList.contains('modal') || event.target.classList.contains('modal-close')) {
+        document.getElementById('file-modal').classList.remove('active');
+      }
+    }
+
+    function toggleCategory(categoryId) {
+      document.getElementById(`category-${categoryId}`).classList.toggle('collapsed');
+    }
+
+    function updateStats() {
+      let total = 0, pending = 0, inProcess = 0, review = 0, completed = 0;
+
+      competencyData.essenceOfJob.forEach(section => {
+        section.categories.forEach(cat => {
+          cat.competencies.forEach(comp => {
+            total++;
+            const status = getCompetencyStatus(comp.id);
+            if (status === 'completed') completed++;
+            else if (status === 'review') review++;
+            else if (status === 'in-process') inProcess++;
+            else pending++;
+          });
+        });
+      });
+
+      const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+      document.getElementById('total-count').textContent = total;
+      document.getElementById('pending-count').textContent = pending;
+      document.getElementById('in-process-count').textContent = inProcess;
+      document.getElementById('review-count').textContent = review;
+      document.getElementById('completed-count').textContent = completed;
+      document.getElementById('overall-progress').style.width = `${percent}%`;
+      document.getElementById('progress-percent').textContent = percent;
+
+      // Update quick stats banner
+      updateQuickStats(pending, inProcess, review, completed);
+    }
+
+    function exportPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      let y = 20;
+      const pageHeight = 280;
+      const margin = 20;
+
+      doc.setFontSize(18);
+      doc.text('Healthcare Simulation Competency Tracker', margin, y);
+      y += 10;
+
+      doc.setFontSize(12);
+      doc.text(`Generated: ${new Date().toLocaleDateString()}`, margin, y);
+      y += 5;
+      doc.text('(Only entries marked "Save to Record" are included)', margin, y);
+      y += 15;
+
+      competencyData.essenceOfJob.forEach(section => {
+        if (y > pageHeight - 40) { doc.addPage(); y = 20; }
+
+        doc.setFontSize(14);
+        doc.setFont(undefined, 'bold');
+        doc.text(section.name, margin, y);
+        y += 8;
+
+        section.categories.forEach(category => {
+          if (y > pageHeight - 30) { doc.addPage(); y = 20; }
+
+          doc.setFontSize(11);
+          doc.setFont(undefined, 'bold');
+          doc.text(`Category ${category.number}: ${category.name}`, margin + 5, y);
+          y += 6;
+
+          category.competencies.forEach(comp => {
+            if (y > pageHeight - 20) { doc.addPage(); y = 20; }
+
+            const status = getCompetencyStatus(comp.id);
+            const data = progress[comp.id] || {};
+
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'normal');
+
+            const statusText = `[${STATUS_LABELS[status]}]`;
+            const compText = doc.splitTextToSize(`${statusText} ${comp.statement}`, 170);
+            doc.text(compText, margin + 10, y);
+            y += compText.length * 5;
+
+            // Only include entries marked as saveToRecord
+            if (data.entries) {
+              data.entries.forEach((entryGroup) => {
+                if (entryGroup) {
+                  entryGroup.filter(e => e.saveToRecord).forEach(entry => {
+                    if (y > pageHeight - 15) { doc.addPage(); y = 20; }
+                    doc.setFontSize(9);
+                    doc.setTextColor(entry.type === 'evidence' ? 22, 163, 74 : 37, 99, 235);
+                    const entryText = doc.splitTextToSize(`[${entry.type.toUpperCase()}] ${entry.text}`, 160);
+                    doc.text(entryText, margin + 15, y);
+                    y += entryText.length * 4;
+                    doc.setTextColor(0);
+                  });
+                }
+              });
+            }
+
+            if (data.files) {
+              data.files.forEach((fileGroup) => {
+                if (fileGroup && fileGroup.length > 0 && y < pageHeight - 10) {
+                  doc.setFontSize(9);
+                  doc.setTextColor(100);
+                  doc.text(`Files: ${fileGroup.map(f => f.name).join(', ')}`, margin + 15, y);
+                  y += 5;
+                  doc.setTextColor(0);
+                }
+              });
+            }
+
+            if (data.dateCompleted) {
+              doc.setFontSize(9);
+              doc.setTextColor(100);
+              doc.text(`Completed: ${data.dateCompleted}`, margin + 15, y);
+              y += 5;
+              doc.setTextColor(0);
+            }
+
+            y += 3;
+          });
+          y += 5;
+        });
+        y += 10;
+      });
+
+      doc.save(`competency-tracker-${new Date().toISOString().split('T')[0]}.pdf`);
+    }
+
+    function exportData() {
+      const exportObj = { exportDate: new Date().toISOString(), progress: progress };
+      const dataStr = JSON.stringify(exportObj, null, 2);
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `competency-progress-${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importData() {
+      document.getElementById('import-input').click();
+    }
+
+    function handleImport(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (imported.progress) {
+            progress = imported.progress;
+            saveProgress();
+            renderContent();
+            renderTabs();
+            updateStats();
+            alert('Progress imported successfully!');
+          } else {
+            alert('Invalid import file format');
+          }
+        } catch (error) {
+          alert('Error importing file: ' + error.message);
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = '';
+    }
+
+    function resetProgress() {
+      if (confirm('Are you sure you want to reset all progress? This cannot be undone.')) {
+        progress = {};
+        localStorage.removeItem('competency-progress-v3');
+        renderContent();
+        renderTabs();
+        updateStats();
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>

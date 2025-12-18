@@ -1,0 +1,517 @@
+{
+  "title": "Healthcare Simulation Competency Tracker",
+  "organization": "BHLex",
+  "essenceOfJob": [
+    {
+      "id": "coordination",
+      "name": "Coordination",
+      "categories": [
+        {
+          "id": "coord-1",
+          "number": 1,
+          "name": "Coordination of Healthcare Simulation",
+          "competencies": [
+            {
+              "id": "coord-1-1",
+              "statement": "Demonstrate knowledge of healthcare simulation",
+              "verificationMethods": [
+                "Complete a course that reviews standards, core competencies, and best practices in healthcare simulation"
+              ]
+            },
+            {
+              "id": "coord-1-2",
+              "statement": "Demonstrate technical ability to maintain and utilize simulation equipment",
+              "verificationMethods": [
+                "Return demonstration of turning on and off simulators"
+              ]
+            },
+            {
+              "id": "coord-1-3",
+              "statement": "Conduct learning needs assessment",
+              "verificationMethods": [
+                "Gather data and present at ERC"
+              ]
+            },
+            {
+              "id": "coord-1-4",
+              "statement": "Demonstrate scheduling of simulation lab",
+              "verificationMethods": [
+                "Return demonstration of scheduling software"
+              ]
+            },
+            {
+              "id": "coord-1-5",
+              "statement": "Review Simulation Dictionary",
+              "verificationMethods": [
+                "Return demonstration of running simulator program during healthcare simulation"
+              ]
+            },
+            {
+              "id": "coord-1-6",
+              "statement": "Analyze data and present at ERC",
+              "verificationMethods": [
+                "Present to education department and ERC procedure for scheduling simulation events in the simulation lab"
+              ]
+            },
+            {
+              "id": "coord-1-7",
+              "statement": "Review Healthcare simulation standards of best practice",
+              "verificationMethods": [
+                "Identify resources for troubleshooting simulation equipment"
+              ]
+            },
+            {
+              "id": "coord-1-8",
+              "statement": "Shadow simulation technician at another facility",
+              "verificationMethods": []
+            }
+          ]
+        },
+        {
+          "id": "coord-2",
+          "number": 2,
+          "name": "Coordination of Allied Health Education",
+          "note": "Will include but not limited to EMS, respiratory, PT/OT, radiology, and laboratory departments",
+          "competencies": [
+            {
+              "id": "coord-2-1",
+              "statement": "Demonstrates knowledge of adult learning principles",
+              "verificationMethods": [
+                "Complete a course covering adult learning theory"
+              ]
+            },
+            {
+              "id": "coord-2-2",
+              "statement": "Facilitates formal and informal learning activities",
+              "verificationMethods": [
+                "Submit 2 peer reviews of facilitation of learning activities"
+              ]
+            },
+            {
+              "id": "coord-2-3",
+              "statement": "Conduct learning needs assessment",
+              "verificationMethods": [
+                "Gather data and present at ERC"
+              ]
+            },
+            {
+              "id": "coord-2-4",
+              "statement": "Demonstrate understanding of experiential learning",
+              "verificationMethods": [
+                "Provide an example of using experiential learning in education activities"
+              ]
+            },
+            {
+              "id": "coord-2-5",
+              "statement": "Review Adult Learning Theory",
+              "verificationMethods": [
+                "Analyze data and present at ERC"
+              ]
+            },
+            {
+              "id": "coord-2-6",
+              "statement": "Review androgogy",
+              "verificationMethods": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "communication",
+      "name": "Communication",
+      "categories": [
+        {
+          "id": "comm-1",
+          "number": 1,
+          "name": "Communication with Education Department",
+          "competencies": [
+            {
+              "id": "comm-1-1",
+              "statement": "Understand team dynamics",
+              "verificationMethods": [
+                "Attend department staff meeting and PDS meeting",
+                "Meet with each member of the education department"
+              ]
+            },
+            {
+              "id": "comm-1-2",
+              "statement": "Demonstrated the ability to write a professional email",
+              "verificationMethods": [
+                "Submit 2 examples of professional emails to team"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "comm-2",
+          "number": 2,
+          "name": "Communication with Allied Health Staff and Leadership",
+          "competencies": [
+            {
+              "id": "comm-2-1",
+              "statement": "Demonstrate active listening",
+              "verificationMethods": [
+                "Peer evaluation"
+              ]
+            },
+            {
+              "id": "comm-2-2",
+              "statement": "Effective questioning and feedback",
+              "verificationMethods": [
+                "Peer evaluation"
+              ]
+            },
+            {
+              "id": "comm-2-3",
+              "statement": "Utilizes emotional intelligence",
+              "verificationMethods": [
+                "Provide examples of emotional intelligence: self-awareness, motivation, self-regulation, social awareness and empathy, social skills"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "comm-3",
+          "number": 3,
+          "name": "Communication with users of the simulation",
+          "competencies": [
+            {
+              "id": "comm-3-1",
+              "statement": "Demonstrate customer service skills",
+              "verificationMethods": [
+                "Provide examples of being approachable",
+                "Provide examples of being accessible"
+              ]
+            },
+            {
+              "id": "comm-3-2",
+              "statement": "Demonstrate conflict resolution skills",
+              "verificationMethods": [
+                "Submit an exemplar of conflict resolution"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "comm-4",
+          "number": 4,
+          "name": "Communication with vendors",
+          "competencies": [
+            {
+              "id": "comm-4-1",
+              "statement": "Demonstrates establishing clear expectations, fostering open dialogue, and maintaining regular and proactive communication with vendors",
+              "verificationMethods": [
+                "Provide examples of communication with vendors"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "manage",
+      "name": "Manage",
+      "categories": [
+        {
+          "id": "manage-1",
+          "number": 1,
+          "name": "Manage simulation equipment",
+          "competencies": [
+            {
+              "id": "manage-1-1",
+              "statement": "Maintaining simulation lab equipment to ensure ability to function",
+              "verificationMethods": [
+                "Shadow simulation technician at another facility",
+                "Maintain an inventory of all equipment for simulation lab",
+                "Create an inventory of all simulation equipment"
+              ]
+            },
+            {
+              "id": "manage-1-2",
+              "statement": "Demonstrate what equipment is in working order and what needs to be repaired",
+              "verificationMethods": []
+            },
+            {
+              "id": "manage-1-3",
+              "statement": "Demonstrate how to contact company technical support to troubleshoot equipment",
+              "verificationMethods": []
+            },
+            {
+              "id": "manage-1-4",
+              "statement": "Demonstrate the ability to update software for simulator equipment",
+              "verificationMethods": []
+            }
+          ]
+        },
+        {
+          "id": "manage-2",
+          "number": 2,
+          "name": "Manage usage of simulation lab",
+          "competencies": [
+            {
+              "id": "manage-2-1",
+              "statement": "Track participant usage of simulation lab",
+              "verificationMethods": [
+                "Create a method to track usage of simulation lab",
+                "Track usage of simulation equipment",
+                "Create a method for tracking usage of simulation equipment"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "manage-3",
+          "number": 3,
+          "name": "Manage outcomes",
+          "competencies": [
+            {
+              "id": "manage-3-1",
+              "statement": "Implement evaluation of simulation events",
+              "verificationMethods": [
+                "Create a survey to evaluate each simulation event"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "manage-4",
+          "number": 4,
+          "name": "Manage Supplies",
+          "competencies": [
+            {
+              "id": "manage-4-1",
+              "statement": "Demonstrate principles of supply chain",
+              "verificationMethods": [
+                "Create a list of supply inventory",
+                "Monitor usage of supplies",
+                "Create a method to track usage of supplies"
+              ]
+            },
+            {
+              "id": "manage-4-2",
+              "statement": "Order supplies as needed",
+              "verificationMethods": [
+                "Submit supply order requisition"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "manage-5",
+          "number": 5,
+          "name": "Manage LMS",
+          "competencies": [
+            {
+              "id": "manage-5-1",
+              "statement": "Understanding of LMS system",
+              "verificationMethods": [
+                "Transcript of training"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "advocate",
+      "name": "Advocate",
+      "categories": [
+        {
+          "id": "advocate-1",
+          "number": 1,
+          "name": "Promote usage of healthcare simulation",
+          "competencies": [
+            {
+              "id": "advocate-1-1",
+              "statement": "Articulates the benefits of healthcare simulation",
+              "verificationMethods": [
+                "Submit evidence of meeting with simulation stakeholders (educators)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "advocate-2",
+          "number": 2,
+          "name": "Advocate for evidence-based use of healthcare simulation",
+          "competencies": [
+            {
+              "id": "advocate-2-1",
+              "statement": "Understands simulation methodologies, principles, and best practice",
+              "verificationMethods": [
+                "Submit documentation of meeting with healthcare simulation users to instruct on healthcare simulation"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "advocate-3",
+          "number": 3,
+          "name": "Advocate for Allied health staff education",
+          "competencies": [
+            {
+              "id": "advocate-3-1",
+              "statement": "Knowledge of policies, procedures, and quality improvement initiatives in Allied Health",
+              "verificationMethods": [
+                "Submit documentation of meeting with allied health leaders"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "collaborate",
+      "name": "Collaborate",
+      "categories": [
+        {
+          "id": "collab-1",
+          "number": 1,
+          "name": "Collaborate with users of simulation lab",
+          "competencies": [
+            {
+              "id": "collab-1-1",
+              "statement": "Demonstrate ability to set up for simulation event based on collaboration with staff that requested the event",
+              "verificationMethods": [
+                "Provide an example of simulation set up based on staff provided information"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "collab-2",
+          "number": 2,
+          "name": "Collaborate with Allied Health leaders and staff",
+          "competencies": [
+            {
+              "id": "collab-2-1",
+              "statement": "Identifies Allied health leadership",
+              "verificationMethods": [
+                "Submit evidence of meeting with Allied health leaders"
+              ]
+            },
+            {
+              "id": "collab-2-2",
+              "statement": "Ensures collaboration and communication with Allied health staff and leadership",
+              "verificationMethods": [
+                "Provide an example of collaboration with allied health staff and leadership"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "oversite",
+      "name": "Oversite",
+      "categories": [
+        {
+          "id": "oversite-1",
+          "number": 1,
+          "name": "Oversee simulation program at BHLex",
+          "competencies": [
+            {
+              "id": "oversite-1-1",
+              "statement": "Oversee daily operation of the simulation center",
+              "verificationMethods": [
+                "Submit example of daily operation including scheduling and ensuring adequate supplies"
+              ]
+            },
+            {
+              "id": "oversite-1-2",
+              "statement": "Provide technical support for simulation equipment and programs",
+              "verificationMethods": [
+                "Submit an example of troubleshooting equipment issue"
+              ]
+            },
+            {
+              "id": "oversite-1-3",
+              "statement": "Maintain safety and security of equipment and participants",
+              "verificationMethods": [
+                "Submit an example of how security of equipment is completed",
+                "Submit an example of how participant safety (psychological safety) is promoted"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "oversite-2",
+          "number": 2,
+          "name": "Oversee Allied Health Education at BHLex",
+          "competencies": [
+            {
+              "id": "oversite-2-1",
+              "statement": "Oversees allied health staff development",
+              "verificationMethods": [
+                "Submit an example of a method used to educate allied health staff"
+              ]
+            },
+            {
+              "id": "oversite-2-2",
+              "statement": "Create a supportive learning environment",
+              "verificationMethods": [
+                "Submit an example of a method used to create a supportive learning environment such as resources used"
+              ]
+            },
+            {
+              "id": "oversite-2-3",
+              "statement": "Ensures education for quality and accreditation is completed",
+              "verificationMethods": [
+                "Submit an example of ensuring compliance with accreditation standards and quality metrics"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "innovate",
+      "name": "Innovate",
+      "categories": [
+        {
+          "id": "innovate-1",
+          "number": 1,
+          "name": "Think outside the box",
+          "competencies": [
+            {
+              "id": "innovate-1-1",
+              "statement": "Demonstrates ability to challenge conventional approaches",
+              "verificationMethods": [
+                "Submit an example of an innovative solution that drives improvement"
+              ]
+            },
+            {
+              "id": "innovate-1-2",
+              "statement": "Demonstrates creative problem solving",
+              "verificationMethods": [
+                "Submit an example of a unique approach to overcome a challenge"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "innovate-2",
+          "number": 2,
+          "name": "Collaborate with Allied health leaders to provide innovative opportunities for education",
+          "competencies": [
+            {
+              "id": "innovate-2-1",
+              "statement": "Demonstrates ability to take in diverse perspectives",
+              "verificationMethods": [
+                "Submit an example of a solution that utilized different perspectives"
+              ]
+            },
+            {
+              "id": "innovate-2-2",
+              "statement": "Demonstrates the ability to adapt as needed",
+              "verificationMethods": [
+                "Submit an example of adapting"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
