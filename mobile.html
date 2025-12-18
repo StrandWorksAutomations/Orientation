@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
   <meta name="description" content="Healthcare Simulation Competency Tracker - Mobile">
-  <meta name="theme-color" content="#2563eb">
+  <meta name="theme-color" content="#1e40af">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="CompTracker">
@@ -14,45 +14,78 @@
   <style>
     :root {
       --primary: #2563eb;
-      --primary-dark: #1d4ed8;
-      --success: #16a34a;
-      --warning: #ca8a04;
+      --primary-light: #3b82f6;
+      --primary-dark: #1e40af;
+      --primary-gradient: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+      --success: #059669;
+      --success-light: #10b981;
+      --success-bg: #d1fae5;
+      --warning: #d97706;
+      --warning-light: #f59e0b;
+      --warning-bg: #fef3c7;
       --danger: #dc2626;
       --purple: #7c3aed;
-      --gray-50: #f9fafb;
-      --gray-100: #f3f4f6;
-      --gray-200: #e5e7eb;
-      --gray-300: #d1d5db;
-      --gray-500: #6b7280;
-      --gray-700: #374151;
-      --gray-900: #111827;
+      --purple-light: #8b5cf6;
+      --purple-bg: #ede9fe;
+      --gray-bg: #f1f5f9;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-400: #94a3b8;
+      --gray-500: #64748b;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-800: #1e293b;
+      --gray-900: #0f172a;
       --bg-primary: #ffffff;
-      --bg-secondary: #f3f4f6;
-      --text-primary: #111827;
-      --text-secondary: #6b7280;
-      --border-color: #e5e7eb;
+      --bg-secondary: #f1f5f9;
+      --bg-tertiary: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
 
     [data-theme="dark"] {
       --primary: #3b82f6;
+      --primary-light: #60a5fa;
       --primary-dark: #2563eb;
-      --success: #22c55e;
-      --warning: #eab308;
-      --danger: #ef4444;
+      --primary-gradient: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      --success: #10b981;
+      --success-light: #34d399;
+      --success-bg: #064e3b;
+      --warning: #f59e0b;
+      --warning-light: #fbbf24;
+      --warning-bg: #78350f;
       --purple: #8b5cf6;
-      --gray-50: #1f2937;
-      --gray-100: #374151;
-      --gray-200: #4b5563;
-      --gray-300: #6b7280;
-      --gray-500: #9ca3af;
-      --gray-700: #d1d5db;
-      --gray-900: #f9fafb;
-      --bg-primary: #111827;
-      --bg-secondary: #1f2937;
-      --text-primary: #f9fafb;
-      --text-secondary: #9ca3af;
-      --border-color: #374151;
+      --purple-light: #a78bfa;
+      --purple-bg: #4c1d95;
+      --gray-bg: #1e293b;
+      --gray-50: #0f172a;
+      --gray-100: #1e293b;
+      --gray-200: #334155;
+      --gray-300: #475569;
+      --gray-400: #64748b;
+      --gray-500: #94a3b8;
+      --gray-600: #cbd5e1;
+      --gray-700: #e2e8f0;
+      --gray-800: #f1f5f9;
+      --gray-900: #f8fafc;
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-tertiary: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #64748b;
+      --border-color: #334155;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.4), 0 2px 4px -1px rgba(0,0,0,0.3);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4), 0 4px 6px -2px rgba(0,0,0,0.3);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -72,23 +105,30 @@
       flex-direction: column;
     }
 
-    /* Mobile Header */
+    /* Mobile Header - Gradient */
     .mobile-header {
-      background: var(--primary);
+      background: var(--primary-gradient);
       color: white;
-      padding: 16px 20px;
+      padding: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      box-shadow: var(--shadow-lg);
     }
 
     .mobile-header h1 {
-      font-size: 1.1rem;
-      font-weight: 600;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .header-subtitle {
+      font-size: 0.75rem;
+      opacity: 0.85;
+      margin-top: 2px;
     }
 
     .header-actions {
@@ -97,51 +137,61 @@
     }
 
     .header-btn {
-      background: rgba(255,255,255,0.2);
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 12px;
+      width: 44px;
+      height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       color: white;
+      transition: all 0.2s;
     }
 
-    .header-btn svg { width: 20px; height: 20px; }
+    .header-btn:active {
+      transform: scale(0.95);
+      background: rgba(255,255,255,0.25);
+    }
 
-    /* Progress Ring */
+    .header-btn svg { width: 22px; height: 22px; }
+
+    /* Progress Section - Enhanced Card */
     .progress-section {
       background: var(--bg-primary);
+      margin: 16px;
       padding: 20px;
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
       display: flex;
       align-items: center;
       gap: 20px;
-      border-bottom: 1px solid var(--border-color);
     }
 
     .progress-ring-container {
       position: relative;
-      width: 80px;
-      height: 80px;
+      width: 90px;
+      height: 90px;
       flex-shrink: 0;
     }
 
     .progress-ring {
       transform: rotate(-90deg);
+      filter: drop-shadow(0 2px 4px rgba(5, 150, 105, 0.3));
     }
 
     .progress-ring-bg {
       fill: none;
       stroke: var(--gray-200);
-      stroke-width: 8;
+      stroke-width: 10;
     }
 
     .progress-ring-fill {
       fill: none;
-      stroke: var(--success);
-      stroke-width: 8;
+      stroke: url(#progressGradient);
+      stroke-width: 10;
       stroke-linecap: round;
       transition: stroke-dashoffset 0.5s ease;
     }
@@ -151,62 +201,85 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--text-primary);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--success);
     }
 
     .progress-stats-mobile {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
+      gap: 10px;
       flex: 1;
     }
 
     .stat-mobile {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 8px;
+      gap: 10px;
+      padding: 12px;
       background: var(--bg-secondary);
-      border-radius: 8px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
     }
+
+    .stat-mobile.pending { border-left: 3px solid var(--gray-400); }
+    .stat-mobile.in-process { border-left: 3px solid var(--warning); }
+    .stat-mobile.review { border-left: 3px solid var(--purple); }
+    .stat-mobile.completed { border-left: 3px solid var(--success); }
 
     .stat-dot {
-      width: 10px;
-      height: 10px;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
 
-    .stat-dot.pending { background: var(--gray-500); }
-    .stat-dot.in-process { background: var(--warning); }
-    .stat-dot.review { background: var(--purple); }
-    .stat-dot.completed { background: var(--success); }
+    .stat-dot.pending { background: linear-gradient(135deg, var(--gray-400), var(--gray-500)); }
+    .stat-dot.in-process { background: linear-gradient(135deg, var(--warning-light), var(--warning)); }
+    .stat-dot.review { background: linear-gradient(135deg, var(--purple-light), var(--purple)); }
+    .stat-dot.completed { background: linear-gradient(135deg, var(--success-light), var(--success)); }
 
-    .stat-info { font-size: 0.8rem; }
-    .stat-info .number { font-weight: 700; color: var(--text-primary); }
-    .stat-info .label { color: var(--text-secondary); }
+    .stat-info { font-size: 0.85rem; }
+    .stat-info .number { font-weight: 800; color: var(--text-primary); font-size: 1.1rem; }
+    .stat-info .label { color: var(--text-secondary); font-size: 0.75rem; }
 
-    /* Search Bar */
+    /* Search Bar - Enhanced */
     .search-bar {
-      padding: 12px 16px;
-      background: var(--bg-primary);
-      border-bottom: 1px solid var(--border-color);
+      padding: 0 16px 16px;
     }
 
     .search-input-mobile {
       width: 100%;
-      padding: 12px 16px;
-      border: 1px solid var(--border-color);
-      border-radius: 24px;
+      padding: 14px 18px;
+      padding-left: 48px;
+      border: 2px solid var(--border-color);
+      border-radius: 16px;
       font-size: 1rem;
-      background: var(--bg-secondary);
+      background: var(--bg-primary);
       color: var(--text-primary);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
     }
 
     .search-input-mobile:focus {
       outline: none;
       border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+
+    .search-container {
+      position: relative;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      width: 20px;
+      height: 20px;
     }
 
     /* Main Content */
@@ -214,53 +287,104 @@
       flex: 1;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      padding-bottom: calc(80px + var(--safe-bottom));
+      padding-bottom: calc(90px + var(--safe-bottom));
     }
 
-    /* Competency Cards */
+    /* Category Cards - Color Coded */
     .category-mobile {
       background: var(--bg-primary);
-      margin: 12px;
-      border-radius: 16px;
+      margin: 0 16px 16px;
+      border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-color);
     }
 
     .category-header-mobile {
-      padding: 16px;
-      background: var(--gray-50);
+      padding: 18px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       cursor: pointer;
+      transition: background 0.2s;
+      position: relative;
+    }
+
+    .category-header-mobile::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+    }
+
+    /* Color-coded category headers */
+    .category-mobile[data-section="coordination"] .category-header-mobile::before { background: var(--primary); }
+    .category-mobile[data-section="communication"] .category-header-mobile::before { background: #06b6d4; }
+    .category-mobile[data-section="manage"] .category-header-mobile::before { background: var(--success); }
+    .category-mobile[data-section="advocate"] .category-header-mobile::before { background: var(--warning); }
+    .category-mobile[data-section="collaborate"] .category-header-mobile::before { background: #ec4899; }
+    .category-mobile[data-section="oversite"] .category-header-mobile::before { background: var(--purple); }
+    .category-mobile[data-section="innovate"] .category-header-mobile::before { background: #f97316; }
+
+    .category-header-mobile:active {
+      background: var(--bg-secondary);
     }
 
     .category-title-mobile {
-      font-weight: 600;
+      font-weight: 700;
       font-size: 0.95rem;
       color: var(--text-primary);
+      flex: 1;
+      padding-right: 12px;
+    }
+
+    .category-section-name {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      font-weight: 600;
     }
 
     .category-badge {
-      background: var(--primary);
+      background: var(--primary-gradient);
       color: white;
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 0.75rem;
-      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .category-chevron {
+      color: var(--text-muted);
+      width: 24px;
+      height: 24px;
+      transition: transform 0.3s;
+      margin-left: 8px;
+    }
+
+    .category-mobile.expanded .category-chevron {
+      transform: rotate(180deg);
     }
 
     .category-content-mobile {
       display: none;
+      border-top: 1px solid var(--border-color);
     }
 
     .category-mobile.expanded .category-content-mobile {
       display: block;
     }
 
+    /* Competency Cards - Enhanced */
     .competency-card {
-      padding: 16px;
+      padding: 20px;
       border-bottom: 1px solid var(--border-color);
+      background: var(--bg-primary);
     }
 
     .competency-card:last-child {
@@ -272,19 +396,20 @@
     }
 
     .comp-statement {
-      font-size: 0.95rem;
+      font-size: 1rem;
       color: var(--text-primary);
-      margin-bottom: 12px;
-      line-height: 1.5;
+      margin-bottom: 16px;
+      line-height: 1.6;
+      font-weight: 500;
     }
 
     .comp-statement mark {
-      background: #fef08a;
-      padding: 0 2px;
-      border-radius: 2px;
+      background: linear-gradient(120deg, #fef08a 0%, #fde047 100%);
+      padding: 2px 4px;
+      border-radius: 4px;
     }
 
-    /* Status Pills */
+    /* Status Pills - Vibrant */
     .status-pills {
       display: flex;
       gap: 8px;
@@ -292,12 +417,12 @@
     }
 
     .status-pill {
-      padding: 10px 16px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      border: 2px solid var(--border-color);
-      background: var(--bg-primary);
+      padding: 12px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: 2px solid transparent;
+      background: var(--bg-secondary);
       color: var(--text-secondary);
       cursor: pointer;
       transition: all 0.2s;
@@ -306,35 +431,51 @@
       min-width: 70px;
     }
 
-    .status-pill.active {
-      border-color: transparent;
+    .status-pill:active {
+      transform: scale(0.97);
     }
 
+    .status-pill.pending {
+      border-color: var(--gray-300);
+    }
     .status-pill.pending.active {
       background: var(--gray-200);
+      border-color: var(--gray-500);
       color: var(--gray-700);
     }
 
+    .status-pill.in-process {
+      border-color: var(--warning-bg);
+    }
     .status-pill.in-process.active {
-      background: #fef3c7;
-      color: #92400e;
+      background: var(--warning-bg);
+      border-color: var(--warning);
+      color: var(--warning);
     }
 
+    .status-pill.review {
+      border-color: var(--purple-bg);
+    }
     .status-pill.review.active {
-      background: #ede9fe;
-      color: #5b21b6;
+      background: var(--purple-bg);
+      border-color: var(--purple);
+      color: var(--purple);
     }
 
+    .status-pill.completed {
+      border-color: var(--success-bg);
+    }
     .status-pill.completed.active {
-      background: #dcfce7;
-      color: #166534;
+      background: var(--success-bg);
+      border-color: var(--success);
+      color: var(--success);
     }
 
-    /* Entry Section */
+    /* Entry Section - Polished */
     .entry-section {
       margin-top: 16px;
       padding-top: 16px;
-      border-top: 1px solid var(--border-color);
+      border-top: 1px dashed var(--border-color);
     }
 
     .entry-toggle {
@@ -344,22 +485,38 @@
       color: var(--primary);
       font-size: 0.9rem;
       cursor: pointer;
-      font-weight: 500;
+      font-weight: 600;
+      padding: 8px 0;
     }
 
     .entry-toggle svg {
-      width: 18px;
-      height: 18px;
-      transition: transform 0.2s;
+      width: 20px;
+      height: 20px;
+      transition: transform 0.3s;
     }
 
     .entry-toggle.expanded svg {
       transform: rotate(180deg);
     }
 
+    .entry-count {
+      background: var(--primary);
+      color: white;
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
     .entry-form-mobile {
       display: none;
-      margin-top: 12px;
+      margin-top: 16px;
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .entry-toggle.expanded + .entry-form-mobile {
@@ -368,15 +525,16 @@
 
     .entry-textarea {
       width: 100%;
-      padding: 12px;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
+      padding: 16px;
+      border: 2px solid var(--border-color);
+      border-radius: 16px;
       font-size: 1rem;
-      min-height: 80px;
+      min-height: 100px;
       resize: none;
       background: var(--bg-secondary);
       color: var(--text-primary);
       font-family: inherit;
+      transition: border-color 0.2s;
     }
 
     .entry-textarea:focus {
@@ -388,80 +546,112 @@
       display: flex;
       gap: 12px;
       margin-top: 12px;
-      flex-wrap: wrap;
     }
 
     .entry-type-btn {
       flex: 1;
-      padding: 10px;
+      padding: 12px;
       border: 2px solid var(--border-color);
-      border-radius: 8px;
+      border-radius: 12px;
       background: var(--bg-primary);
       color: var(--text-secondary);
-      font-size: 0.85rem;
+      font-size: 0.9rem;
+      font-weight: 600;
       cursor: pointer;
+      transition: all 0.2s;
     }
 
     .entry-type-btn.active {
       border-color: var(--primary);
+      background: rgba(37, 99, 235, 0.1);
       color: var(--primary);
     }
 
     .save-entry-btn {
       width: 100%;
-      padding: 14px;
-      background: var(--primary);
+      padding: 16px;
+      background: var(--primary-gradient);
       color: white;
       border: none;
-      border-radius: 12px;
+      border-radius: 16px;
       font-size: 1rem;
-      font-weight: 600;
+      font-weight: 700;
       margin-top: 12px;
       cursor: pointer;
+      box-shadow: var(--shadow-md);
+      transition: all 0.2s;
     }
 
     .save-entry-btn:active {
-      background: var(--primary-dark);
+      transform: scale(0.98);
     }
 
     .entries-list-mobile {
-      margin-top: 12px;
+      margin-top: 16px;
     }
 
     .entry-mobile {
       background: var(--bg-secondary);
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 8px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin-bottom: 10px;
       position: relative;
+      border-left: 4px solid var(--gray-300);
     }
 
-    .entry-mobile.notes { border-left: 3px solid var(--primary); }
-    .entry-mobile.evidence { border-left: 3px solid var(--success); }
+    .entry-mobile.notes {
+      border-left-color: var(--primary);
+      background: linear-gradient(90deg, rgba(37, 99, 235, 0.05) 0%, var(--bg-secondary) 100%);
+    }
+    .entry-mobile.evidence {
+      border-left-color: var(--success);
+      background: linear-gradient(90deg, rgba(5, 150, 105, 0.05) 0%, var(--bg-secondary) 100%);
+    }
 
     .entry-text-mobile {
       font-size: 0.9rem;
       color: var(--text-primary);
-      margin-bottom: 4px;
+      margin-bottom: 8px;
+      padding-right: 24px;
     }
 
     .entry-meta-mobile {
       font-size: 0.75rem;
-      color: var(--text-secondary);
+      color: var(--text-muted);
       display: flex;
       justify-content: space-between;
+      align-items: center;
+    }
+
+    .entry-type-badge {
+      background: var(--bg-tertiary);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.7rem;
+      text-transform: uppercase;
     }
 
     .entry-delete-mobile {
       position: absolute;
-      top: 8px;
-      right: 8px;
+      top: 12px;
+      right: 12px;
       color: var(--danger);
-      font-size: 1.2rem;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
+      border-radius: 6px;
+      transition: background 0.2s;
     }
 
-    /* Bottom Navigation */
+    .entry-delete-mobile:active {
+      background: rgba(220, 38, 38, 0.1);
+    }
+
+    /* Bottom Navigation - Glass Effect */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -470,9 +660,10 @@
       background: var(--bg-primary);
       border-top: 1px solid var(--border-color);
       display: flex;
-      padding-bottom: var(--safe-bottom);
+      padding: 8px 16px;
+      padding-bottom: calc(8px + var(--safe-bottom));
       z-index: 100;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
     }
 
     .nav-item {
@@ -480,30 +671,37 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 12px 8px;
+      padding: 10px 8px;
       cursor: pointer;
-      color: var(--text-secondary);
-      transition: color 0.2s;
+      color: var(--text-muted);
+      transition: all 0.2s;
       border: none;
       background: none;
+      border-radius: 12px;
+      margin: 0 4px;
     }
 
     .nav-item.active {
       color: var(--primary);
+      background: rgba(37, 99, 235, 0.1);
+    }
+
+    .nav-item:active {
+      transform: scale(0.95);
     }
 
     .nav-item svg {
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       margin-bottom: 4px;
     }
 
     .nav-item span {
       font-size: 0.7rem;
-      font-weight: 500;
+      font-weight: 600;
     }
 
-    /* Filter Modal */
+    /* Filter Modal - Bottom Sheet */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -511,81 +709,117 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.6);
       z-index: 200;
+      backdrop-filter: blur(4px);
     }
 
     .modal-overlay.active {
       display: flex;
       align-items: flex-end;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .modal-content-mobile {
       background: var(--bg-primary);
       width: 100%;
-      border-radius: 20px 20px 0 0;
+      border-radius: 24px 24px 0 0;
       padding: 20px;
-      padding-bottom: calc(20px + var(--safe-bottom));
+      padding-bottom: calc(24px + var(--safe-bottom));
       max-height: 80vh;
       overflow-y: auto;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
     }
 
     .modal-handle {
-      width: 40px;
-      height: 4px;
+      width: 48px;
+      height: 5px;
       background: var(--gray-300);
-      border-radius: 2px;
-      margin: 0 auto 20px;
+      border-radius: 3px;
+      margin: 0 auto 24px;
     }
 
     .modal-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 16px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 20px;
       color: var(--text-primary);
     }
 
     .filter-option {
       display: flex;
       align-items: center;
-      padding: 16px;
-      border-radius: 12px;
+      padding: 18px 16px;
+      border-radius: 16px;
       cursor: pointer;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       background: var(--bg-secondary);
+      border: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .filter-option:active {
+      transform: scale(0.98);
     }
 
     .filter-option.active {
-      background: var(--primary);
-      color: white;
+      background: rgba(37, 99, 235, 0.1);
+      border-color: var(--primary);
     }
 
     .filter-option .dot {
-      width: 12px;
-      height: 12px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
-      margin-right: 12px;
+      margin-right: 14px;
+      box-shadow: var(--shadow-sm);
     }
 
-    /* Toast Notification */
+    .filter-option .filter-label {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    /* Toast Notification - Enhanced */
     .toast {
       position: fixed;
-      bottom: calc(100px + var(--safe-bottom));
+      bottom: calc(110px + var(--safe-bottom));
       left: 50%;
       transform: translateX(-50%) translateY(100px);
       background: var(--gray-900);
       color: white;
-      padding: 12px 24px;
-      border-radius: 24px;
-      font-size: 0.9rem;
+      padding: 14px 28px;
+      border-radius: 28px;
+      font-size: 0.95rem;
+      font-weight: 600;
       z-index: 300;
       opacity: 0;
-      transition: transform 0.3s, opacity 0.3s;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .toast.visible {
       transform: translateX(-50%) translateY(0);
       opacity: 1;
+    }
+
+    .toast-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--success-light);
     }
 
     /* Section Views */
@@ -597,47 +831,100 @@
       display: block;
     }
 
-    /* More Menu Items */
+    /* More Menu Items - Polished */
+    .more-section {
+      padding: 16px;
+    }
+
+    .more-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      font-weight: 700;
+      padding-left: 4px;
+    }
+
     .menu-item {
       display: flex;
       align-items: center;
       gap: 16px;
-      padding: 16px;
-      border-radius: 12px;
+      padding: 18px 16px;
+      border-radius: 16px;
       cursor: pointer;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+    }
+
+    .menu-item:active {
+      transform: scale(0.98);
       background: var(--bg-secondary);
     }
 
     .menu-item svg {
       width: 24px;
       height: 24px;
-      color: var(--text-secondary);
+      color: var(--primary);
     }
 
     .menu-item-text {
       font-size: 1rem;
       color: var(--text-primary);
+      font-weight: 500;
     }
 
     .menu-item.danger {
-      background: #fef2f2;
+      border-color: rgba(220, 38, 38, 0.2);
     }
 
-    .menu-item.danger svg,
+    .menu-item.danger svg {
+      color: var(--danger);
+    }
+
     .menu-item.danger .menu-item-text {
       color: var(--danger);
     }
 
-    [data-theme="dark"] .menu-item.danger {
-      background: #450a0a;
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+
+    .empty-state svg {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .empty-state p {
+      font-size: 1rem;
     }
   </style>
 </head>
 <body>
+  <!-- SVG Gradients -->
+  <svg style="position: absolute; width: 0; height: 0;">
+    <defs>
+      <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style="stop-color:#059669"/>
+        <stop offset="100%" style="stop-color:#10b981"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
   <!-- Mobile Header -->
   <div class="mobile-header">
-    <h1>Competency Tracker</h1>
+    <div>
+      <h1>Competency Tracker</h1>
+      <div class="header-subtitle">BHLex Healthcare Simulation</div>
+    </div>
     <div class="header-actions">
       <button class="header-btn" onclick="toggleTheme()" title="Toggle theme">
         <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -655,59 +942,67 @@
     </div>
   </div>
 
-  <!-- Progress Section -->
-  <div class="progress-section">
-    <div class="progress-ring-container">
-      <svg class="progress-ring" width="80" height="80">
-        <circle class="progress-ring-bg" cx="40" cy="40" r="32"></circle>
-        <circle class="progress-ring-fill" cx="40" cy="40" r="32" id="progress-ring-fill"
-          stroke-dasharray="201" stroke-dashoffset="201"></circle>
-      </svg>
-      <span class="progress-ring-text" id="progress-percent-mobile">0%</span>
-    </div>
-    <div class="progress-stats-mobile">
-      <div class="stat-mobile">
-        <span class="stat-dot pending"></span>
-        <div class="stat-info"><span class="number" id="stat-pending">0</span> <span class="label">Pending</span></div>
-      </div>
-      <div class="stat-mobile">
-        <span class="stat-dot in-process"></span>
-        <div class="stat-info"><span class="number" id="stat-in-process">0</span> <span class="label">In Process</span></div>
-      </div>
-      <div class="stat-mobile">
-        <span class="stat-dot review"></span>
-        <div class="stat-info"><span class="number" id="stat-review">0</span> <span class="label">Review</span></div>
-      </div>
-      <div class="stat-mobile">
-        <span class="stat-dot completed"></span>
-        <div class="stat-info"><span class="number" id="stat-completed">0</span> <span class="label">Complete</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Search Bar -->
-  <div class="search-bar">
-    <input type="text" class="search-input-mobile" id="search-input" placeholder="Search competencies..." oninput="handleSearch()">
-  </div>
-
   <!-- Main Content -->
   <div class="main-content" id="main-content">
     <!-- Home View -->
     <div class="section-view active" id="view-home">
+      <!-- Progress Section -->
+      <div class="progress-section">
+        <div class="progress-ring-container">
+          <svg class="progress-ring" width="90" height="90">
+            <circle class="progress-ring-bg" cx="45" cy="45" r="36"></circle>
+            <circle class="progress-ring-fill" cx="45" cy="45" r="36" id="progress-ring-fill"
+              stroke-dasharray="226" stroke-dashoffset="226"></circle>
+          </svg>
+          <span class="progress-ring-text" id="progress-percent-mobile">0%</span>
+        </div>
+        <div class="progress-stats-mobile">
+          <div class="stat-mobile pending">
+            <span class="stat-dot pending"></span>
+            <div class="stat-info"><span class="number" id="stat-pending">0</span><br><span class="label">Pending</span></div>
+          </div>
+          <div class="stat-mobile in-process">
+            <span class="stat-dot in-process"></span>
+            <div class="stat-info"><span class="number" id="stat-in-process">0</span><br><span class="label">In Progress</span></div>
+          </div>
+          <div class="stat-mobile review">
+            <span class="stat-dot review"></span>
+            <div class="stat-info"><span class="number" id="stat-review">0</span><br><span class="label">Review</span></div>
+          </div>
+          <div class="stat-mobile completed">
+            <span class="stat-dot completed"></span>
+            <div class="stat-info"><span class="number" id="stat-completed">0</span><br><span class="label">Complete</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="search-bar">
+        <div class="search-container">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" class="search-input-mobile" id="search-input" placeholder="Search competencies..." oninput="handleSearch()">
+        </div>
+      </div>
+
       <div id="categories-container"></div>
     </div>
 
     <!-- More View -->
     <div class="section-view" id="view-more">
-      <div style="padding: 16px;">
-        <h2 style="margin-bottom: 16px; color: var(--text-primary);">Actions</h2>
+      <div class="more-section">
+        <div class="more-title">Export & Import</div>
 
         <div class="menu-item" onclick="exportPDF()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
             <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="12" y1="18" x2="12" y2="12"></line>
+            <line x1="9" y1="15" x2="15" y2="15"></line>
           </svg>
-          <span class="menu-item-text">Export PDF</span>
+          <span class="menu-item-text">Export as PDF</span>
         </div>
 
         <div class="menu-item" onclick="exportData()">
@@ -716,7 +1011,7 @@
             <polyline points="7 10 12 15 17 10"></polyline>
             <line x1="12" y1="15" x2="12" y2="3"></line>
           </svg>
-          <span class="menu-item-text">Export JSON</span>
+          <span class="menu-item-text">Export JSON Backup</span>
         </div>
 
         <div class="menu-item" onclick="importData()">
@@ -725,8 +1020,10 @@
             <polyline points="17 8 12 3 7 8"></polyline>
             <line x1="12" y1="3" x2="12" y2="15"></line>
           </svg>
-          <span class="menu-item-text">Import JSON</span>
+          <span class="menu-item-text">Import from Backup</span>
         </div>
+
+        <div class="more-title" style="margin-top: 24px;">Navigation</div>
 
         <div class="menu-item" onclick="window.location.href='index.html'">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -734,13 +1031,17 @@
             <line x1="8" y1="21" x2="16" y2="21"></line>
             <line x1="12" y1="17" x2="12" y2="21"></line>
           </svg>
-          <span class="menu-item-text">Desktop Version</span>
+          <span class="menu-item-text">Switch to Desktop Version</span>
         </div>
+
+        <div class="more-title" style="margin-top: 24px;">Danger Zone</div>
 
         <div class="menu-item danger" onclick="resetProgress()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="3 6 5 6 21 6"></polyline>
             <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            <line x1="10" y1="11" x2="10" y2="17"></line>
+            <line x1="14" y1="11" x2="14" y2="17"></line>
           </svg>
           <span class="menu-item-text">Reset All Progress</span>
         </div>
@@ -779,39 +1080,41 @@
       <div class="modal-handle"></div>
       <div class="modal-title">Filter by Status</div>
       <div class="filter-option active" data-filter="all" onclick="setFilter('all')">
-        <span class="dot" style="background: var(--primary)"></span>
-        All Competencies
+        <span class="dot" style="background: linear-gradient(135deg, #3b82f6, #1e40af)"></span>
+        <span class="filter-label">All Competencies</span>
       </div>
       <div class="filter-option" data-filter="pending" onclick="setFilter('pending')">
-        <span class="dot" style="background: var(--gray-500)"></span>
-        Pending
+        <span class="dot" style="background: linear-gradient(135deg, #94a3b8, #64748b)"></span>
+        <span class="filter-label">Pending</span>
       </div>
       <div class="filter-option" data-filter="in-process" onclick="setFilter('in-process')">
-        <span class="dot" style="background: var(--warning)"></span>
-        In Process
+        <span class="dot" style="background: linear-gradient(135deg, #fbbf24, #d97706)"></span>
+        <span class="filter-label">In Progress</span>
       </div>
       <div class="filter-option" data-filter="review" onclick="setFilter('review')">
-        <span class="dot" style="background: var(--purple)"></span>
-        Ready for Review
+        <span class="dot" style="background: linear-gradient(135deg, #a78bfa, #7c3aed)"></span>
+        <span class="filter-label">Ready for Review</span>
       </div>
       <div class="filter-option" data-filter="completed" onclick="setFilter('completed')">
-        <span class="dot" style="background: var(--success)"></span>
-        Completed
+        <span class="dot" style="background: linear-gradient(135deg, #34d399, #059669)"></span>
+        <span class="filter-label">Completed</span>
       </div>
     </div>
   </div>
 
   <!-- Toast -->
-  <div class="toast" id="toast">Saved</div>
+  <div class="toast" id="toast">
+    <svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    <span id="toast-text">Saved</span>
+  </div>
 
   <!-- Hidden file input -->
   <input type="file" id="import-input" style="display: none" accept=".json" onchange="handleImport(event)">
 
   <script>
-    // Same competency data structure as desktop
     const competencyData = {
-      "title": "Healthcare Simulation Competency Tracker",
-      "organization": "BHLex",
       "essenceOfJob": [
         {
           "id": "coordination",
@@ -819,30 +1122,28 @@
           "categories": [
             {
               "id": "coord-1",
-              "number": 1,
               "name": "Coordination of Healthcare Simulation",
               "competencies": [
-                {"id": "coord-1-1", "statement": "Demonstrate knowledge of healthcare simulation", "verificationMethods": ["Complete a course that reviews standards, core competencies, and best practices in healthcare simulation"]},
-                {"id": "coord-1-2", "statement": "Demonstrate technical ability to maintain and utilize simulation equipment", "verificationMethods": ["Return demonstration of turning on and off simulators"]},
-                {"id": "coord-1-3", "statement": "Conduct learning needs assessment", "verificationMethods": ["Gather data and present at ERC"]},
-                {"id": "coord-1-4", "statement": "Demonstrate scheduling of simulation lab", "verificationMethods": ["Return demonstration of scheduling software"]},
-                {"id": "coord-1-5", "statement": "Review Simulation Dictionary", "verificationMethods": ["Return demonstration of running simulator program during healthcare simulation"]},
-                {"id": "coord-1-6", "statement": "Analyze data and present at ERC", "verificationMethods": ["Present to education department and ERC procedure for scheduling simulation events in the simulation lab"]},
-                {"id": "coord-1-7", "statement": "Review Healthcare simulation standards of best practice", "verificationMethods": ["Identify resources for troubleshooting simulation equipment"]},
-                {"id": "coord-1-8", "statement": "Shadow simulation technician at another facility", "verificationMethods": []}
+                {"id": "coord-1-1", "statement": "Demonstrate knowledge of healthcare simulation"},
+                {"id": "coord-1-2", "statement": "Demonstrate technical ability to maintain and utilize simulation equipment"},
+                {"id": "coord-1-3", "statement": "Conduct learning needs assessment"},
+                {"id": "coord-1-4", "statement": "Demonstrate scheduling of simulation lab"},
+                {"id": "coord-1-5", "statement": "Review Simulation Dictionary"},
+                {"id": "coord-1-6", "statement": "Analyze data and present at ERC"},
+                {"id": "coord-1-7", "statement": "Review Healthcare simulation standards of best practice"},
+                {"id": "coord-1-8", "statement": "Shadow simulation technician at another facility"}
               ]
             },
             {
               "id": "coord-2",
-              "number": 2,
               "name": "Coordination of Allied Health Education",
               "competencies": [
-                {"id": "coord-2-1", "statement": "Demonstrates knowledge of adult learning principles", "verificationMethods": ["Complete a course covering adult learning theory"]},
-                {"id": "coord-2-2", "statement": "Facilitates formal and informal learning activities", "verificationMethods": ["Submit 2 peer reviews of facilitation of learning activities"]},
-                {"id": "coord-2-3", "statement": "Conduct learning needs assessment", "verificationMethods": ["Gather data and present at ERC"]},
-                {"id": "coord-2-4", "statement": "Demonstrate understanding of experiential learning", "verificationMethods": ["Provide an example of using experiential learning in education activities"]},
-                {"id": "coord-2-5", "statement": "Review Adult Learning Theory", "verificationMethods": ["Analyze data and present at ERC"]},
-                {"id": "coord-2-6", "statement": "Review androgogy", "verificationMethods": []}
+                {"id": "coord-2-1", "statement": "Demonstrates knowledge of adult learning principles"},
+                {"id": "coord-2-2", "statement": "Facilitates formal and informal learning activities"},
+                {"id": "coord-2-3", "statement": "Conduct learning needs assessment"},
+                {"id": "coord-2-4", "statement": "Demonstrate understanding of experiential learning"},
+                {"id": "coord-2-5", "statement": "Review Adult Learning Theory"},
+                {"id": "coord-2-6", "statement": "Review androgogy"}
               ]
             }
           ]
@@ -851,21 +1152,21 @@
           "id": "communication",
           "name": "Communication",
           "categories": [
-            {"id": "comm-1", "number": 1, "name": "Communication with Education Department", "competencies": [
-              {"id": "comm-1-1", "statement": "Understand team dynamics", "verificationMethods": ["Attend department staff meeting and PDS meeting", "Meet with each member of the education department"]},
-              {"id": "comm-1-2", "statement": "Demonstrated the ability to write a professional email", "verificationMethods": ["Submit 2 examples of professional emails to team"]}
+            {"id": "comm-1", "name": "Communication with Education Department", "competencies": [
+              {"id": "comm-1-1", "statement": "Understand team dynamics"},
+              {"id": "comm-1-2", "statement": "Demonstrated the ability to write a professional email"}
             ]},
-            {"id": "comm-2", "number": 2, "name": "Communication with Allied Health Staff and Leadership", "competencies": [
-              {"id": "comm-2-1", "statement": "Demonstrate active listening", "verificationMethods": ["Peer evaluation"]},
-              {"id": "comm-2-2", "statement": "Effective questioning and feedback", "verificationMethods": ["Peer evaluation"]},
-              {"id": "comm-2-3", "statement": "Utilizes emotional intelligence", "verificationMethods": ["Provide examples of emotional intelligence: self-awareness, motivation, self-regulation, social awareness and empathy, social skills"]}
+            {"id": "comm-2", "name": "Communication with Allied Health Staff and Leadership", "competencies": [
+              {"id": "comm-2-1", "statement": "Demonstrate active listening"},
+              {"id": "comm-2-2", "statement": "Effective questioning and feedback"},
+              {"id": "comm-2-3", "statement": "Utilizes emotional intelligence"}
             ]},
-            {"id": "comm-3", "number": 3, "name": "Communication with users of the simulation", "competencies": [
-              {"id": "comm-3-1", "statement": "Demonstrate customer service skills", "verificationMethods": ["Provide examples of being approachable", "Provide examples of being accessible"]},
-              {"id": "comm-3-2", "statement": "Demonstrate conflict resolution skills", "verificationMethods": ["Submit an exemplar of conflict resolution"]}
+            {"id": "comm-3", "name": "Communication with users of the simulation", "competencies": [
+              {"id": "comm-3-1", "statement": "Demonstrate customer service skills"},
+              {"id": "comm-3-2", "statement": "Demonstrate conflict resolution skills"}
             ]},
-            {"id": "comm-4", "number": 4, "name": "Communication with vendors", "competencies": [
-              {"id": "comm-4-1", "statement": "Demonstrates establishing clear expectations, fostering open dialogue, and maintaining regular and proactive communication with vendors", "verificationMethods": ["Provide examples of communication with vendors"]}
+            {"id": "comm-4", "name": "Communication with vendors", "competencies": [
+              {"id": "comm-4-1", "statement": "Demonstrates establishing clear expectations with vendors"}
             ]}
           ]
         },
@@ -873,24 +1174,24 @@
           "id": "manage",
           "name": "Manage",
           "categories": [
-            {"id": "manage-1", "number": 1, "name": "Manage simulation equipment", "competencies": [
-              {"id": "manage-1-1", "statement": "Maintaining simulation lab equipment to ensure ability to function", "verificationMethods": ["Shadow simulation technician at another facility", "Maintain an inventory of all equipment for simulation lab", "Create an inventory of all simulation equipment"]},
-              {"id": "manage-1-2", "statement": "Demonstrate what equipment is in working order and what needs to be repaired", "verificationMethods": []},
-              {"id": "manage-1-3", "statement": "Demonstrate how to contact company technical support to troubleshoot equipment", "verificationMethods": []},
-              {"id": "manage-1-4", "statement": "Demonstrate the ability to update software for simulator equipment", "verificationMethods": []}
+            {"id": "manage-1", "name": "Manage simulation equipment", "competencies": [
+              {"id": "manage-1-1", "statement": "Maintaining simulation lab equipment"},
+              {"id": "manage-1-2", "statement": "Demonstrate equipment status and repair needs"},
+              {"id": "manage-1-3", "statement": "Demonstrate contacting technical support"},
+              {"id": "manage-1-4", "statement": "Demonstrate ability to update software"}
             ]},
-            {"id": "manage-2", "number": 2, "name": "Manage usage of simulation lab", "competencies": [
-              {"id": "manage-2-1", "statement": "Track participant usage of simulation lab", "verificationMethods": ["Create a method to track usage of simulation lab", "Track usage of simulation equipment", "Create a method for tracking usage of simulation equipment"]}
+            {"id": "manage-2", "name": "Manage usage of simulation lab", "competencies": [
+              {"id": "manage-2-1", "statement": "Track participant usage of simulation lab"}
             ]},
-            {"id": "manage-3", "number": 3, "name": "Manage outcomes", "competencies": [
-              {"id": "manage-3-1", "statement": "Implement evaluation of simulation events", "verificationMethods": ["Create a survey to evaluate each simulation event"]}
+            {"id": "manage-3", "name": "Manage outcomes", "competencies": [
+              {"id": "manage-3-1", "statement": "Implement evaluation of simulation events"}
             ]},
-            {"id": "manage-4", "number": 4, "name": "Manage Supplies", "competencies": [
-              {"id": "manage-4-1", "statement": "Demonstrate principles of supply chain", "verificationMethods": ["Create a list of supply inventory", "Monitor usage of supplies", "Create a method to track usage of supplies"]},
-              {"id": "manage-4-2", "statement": "Order supplies as needed", "verificationMethods": ["Submit supply order requisition"]}
+            {"id": "manage-4", "name": "Manage Supplies", "competencies": [
+              {"id": "manage-4-1", "statement": "Demonstrate principles of supply chain"},
+              {"id": "manage-4-2", "statement": "Order supplies as needed"}
             ]},
-            {"id": "manage-5", "number": 5, "name": "Manage LMS", "competencies": [
-              {"id": "manage-5-1", "statement": "Understanding of LMS system", "verificationMethods": ["Transcript of training"]}
+            {"id": "manage-5", "name": "Manage LMS", "competencies": [
+              {"id": "manage-5-1", "statement": "Understanding of LMS system"}
             ]}
           ]
         },
@@ -898,14 +1199,14 @@
           "id": "advocate",
           "name": "Advocate",
           "categories": [
-            {"id": "advocate-1", "number": 1, "name": "Promote usage of healthcare simulation", "competencies": [
-              {"id": "advocate-1-1", "statement": "Articulates the benefits of healthcare simulation", "verificationMethods": ["Submit evidence of meeting with simulation stakeholders (educators)"]}
+            {"id": "advocate-1", "name": "Promote usage of healthcare simulation", "competencies": [
+              {"id": "advocate-1-1", "statement": "Articulates the benefits of healthcare simulation"}
             ]},
-            {"id": "advocate-2", "number": 2, "name": "Advocate for evidence-based use of healthcare simulation", "competencies": [
-              {"id": "advocate-2-1", "statement": "Understands simulation methodologies, principles, and best practice", "verificationMethods": ["Submit documentation of meeting with healthcare simulation users to instruct on healthcare simulation"]}
+            {"id": "advocate-2", "name": "Advocate for evidence-based simulation", "competencies": [
+              {"id": "advocate-2-1", "statement": "Understands simulation methodologies and best practice"}
             ]},
-            {"id": "advocate-3", "number": 3, "name": "Advocate for Allied health staff education", "competencies": [
-              {"id": "advocate-3-1", "statement": "Knowledge of policies, procedures, and quality improvement initiatives in Allied Health", "verificationMethods": ["Submit documentation of meeting with allied health leaders"]}
+            {"id": "advocate-3", "name": "Advocate for Allied health staff education", "competencies": [
+              {"id": "advocate-3-1", "statement": "Knowledge of policies and quality improvement"}
             ]}
           ]
         },
@@ -913,12 +1214,12 @@
           "id": "collaborate",
           "name": "Collaborate",
           "categories": [
-            {"id": "collab-1", "number": 1, "name": "Collaborate with users of simulation lab", "competencies": [
-              {"id": "collab-1-1", "statement": "Demonstrate ability to set up for simulation event based on collaboration with staff that requested the event", "verificationMethods": ["Provide an example of simulation set up based on staff provided information"]}
+            {"id": "collab-1", "name": "Collaborate with simulation lab users", "competencies": [
+              {"id": "collab-1-1", "statement": "Demonstrate ability to set up simulation events"}
             ]},
-            {"id": "collab-2", "number": 2, "name": "Collaborate with Allied Health leaders and staff", "competencies": [
-              {"id": "collab-2-1", "statement": "Identifies Allied health leadership", "verificationMethods": ["Submit evidence of meeting with Allied health leaders"]},
-              {"id": "collab-2-2", "statement": "Ensures collaboration and communication with Allied health staff and leadership", "verificationMethods": ["Provide an example of collaboration with allied health staff and leadership"]}
+            {"id": "collab-2", "name": "Collaborate with Allied Health leaders", "competencies": [
+              {"id": "collab-2-1", "statement": "Identifies Allied health leadership"},
+              {"id": "collab-2-2", "statement": "Ensures collaboration with Allied health staff"}
             ]}
           ]
         },
@@ -926,15 +1227,15 @@
           "id": "oversite",
           "name": "Oversight",
           "categories": [
-            {"id": "oversite-1", "number": 1, "name": "Oversee simulation program at BHLex", "competencies": [
-              {"id": "oversite-1-1", "statement": "Oversee daily operation of the simulation center", "verificationMethods": ["Submit example of daily operation including scheduling and ensuring adequate supplies"]},
-              {"id": "oversite-1-2", "statement": "Provide technical support for simulation equipment and programs", "verificationMethods": ["Submit an example of troubleshooting equipment issue"]},
-              {"id": "oversite-1-3", "statement": "Maintain safety and security of equipment and participants", "verificationMethods": ["Submit an example of how security of equipment is completed", "Submit an example of how participant safety (psychological safety) is promoted"]}
+            {"id": "oversite-1", "name": "Oversee simulation program", "competencies": [
+              {"id": "oversite-1-1", "statement": "Oversee daily operation of the simulation center"},
+              {"id": "oversite-1-2", "statement": "Provide technical support for equipment"},
+              {"id": "oversite-1-3", "statement": "Maintain safety and security"}
             ]},
-            {"id": "oversite-2", "number": 2, "name": "Oversee Allied Health Education at BHLex", "competencies": [
-              {"id": "oversite-2-1", "statement": "Oversees allied health staff development", "verificationMethods": ["Submit an example of a method used to educate allied health staff"]},
-              {"id": "oversite-2-2", "statement": "Create a supportive learning environment", "verificationMethods": ["Submit an example of a method used to create a supportive learning environment such as resources used"]},
-              {"id": "oversite-2-3", "statement": "Ensures education for quality and accreditation is completed", "verificationMethods": ["Submit an example of ensuring compliance with accreditation standards and quality metrics"]}
+            {"id": "oversite-2", "name": "Oversee Allied Health Education", "competencies": [
+              {"id": "oversite-2-1", "statement": "Oversees allied health staff development"},
+              {"id": "oversite-2-2", "statement": "Create a supportive learning environment"},
+              {"id": "oversite-2-3", "statement": "Ensures education for quality and accreditation"}
             ]}
           ]
         },
@@ -942,13 +1243,13 @@
           "id": "innovate",
           "name": "Innovate",
           "categories": [
-            {"id": "innovate-1", "number": 1, "name": "Think outside the box", "competencies": [
-              {"id": "innovate-1-1", "statement": "Demonstrates ability to challenge conventional approaches", "verificationMethods": ["Submit an example of an innovative solution that drives improvement"]},
-              {"id": "innovate-1-2", "statement": "Demonstrates creative problem solving", "verificationMethods": ["Submit an example of a unique approach to overcome a challenge"]}
+            {"id": "innovate-1", "name": "Think outside the box", "competencies": [
+              {"id": "innovate-1-1", "statement": "Demonstrates ability to challenge conventional approaches"},
+              {"id": "innovate-1-2", "statement": "Demonstrates creative problem solving"}
             ]},
-            {"id": "innovate-2", "number": 2, "name": "Collaborate with Allied health leaders to provide innovative opportunities for education", "competencies": [
-              {"id": "innovate-2-1", "statement": "Demonstrates ability to take in diverse perspectives", "verificationMethods": ["Submit an example of a solution that utilized different perspectives"]},
-              {"id": "innovate-2-2", "statement": "Demonstrates the ability to adapt as needed", "verificationMethods": ["Submit an example of adapting"]}
+            {"id": "innovate-2", "name": "Collaborative innovation", "competencies": [
+              {"id": "innovate-2-1", "statement": "Demonstrates ability to take in diverse perspectives"},
+              {"id": "innovate-2-2", "statement": "Demonstrates the ability to adapt as needed"}
             ]}
           ]
         }
@@ -962,12 +1263,11 @@
     const STATUS_OPTIONS = ['pending', 'in-process', 'review', 'completed'];
     const STATUS_LABELS = {
       'pending': 'Pending',
-      'in-process': 'In Process',
+      'in-process': 'In Progress',
       'review': 'Review',
       'completed': 'Done'
     };
 
-    // Initialize
     function init() {
       initTheme();
       loadProgress();
@@ -975,7 +1275,6 @@
       updateStats();
     }
 
-    // Theme
     function initTheme() {
       const savedTheme = localStorage.getItem('competency-theme') || 'light';
       document.documentElement.setAttribute('data-theme', savedTheme);
@@ -999,7 +1298,6 @@
       }
     }
 
-    // Data Management
     function loadProgress() {
       const saved = localStorage.getItem('competency-progress-v3');
       if (saved) progress = JSON.parse(saved);
@@ -1007,14 +1305,13 @@
 
     function saveProgress() {
       localStorage.setItem('competency-progress-v3', JSON.stringify(progress));
-      showToast('Saved');
+      showToast('Progress saved');
     }
 
     function getCompetencyStatus(compId) {
       return progress[compId]?.status || 'pending';
     }
 
-    // View Switching
     function switchView(view) {
       document.querySelectorAll('.section-view').forEach(v => v.classList.remove('active'));
       document.getElementById(`view-${view}`).classList.add('active');
@@ -1022,7 +1319,6 @@
       document.querySelector(`[data-view="${view}"]`)?.classList.add('active');
     }
 
-    // Filter
     function openFilterModal() {
       document.getElementById('filter-modal').classList.add('active');
     }
@@ -1042,7 +1338,6 @@
       applyFilters();
     }
 
-    // Search
     function handleSearch() {
       searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
       applyFilters();
@@ -1060,7 +1355,6 @@
 
         card.classList.toggle('hidden', !(matchesFilter && matchesSearch));
 
-        // Highlight search
         if (matchesSearch && searchQuery) {
           const statement = card.querySelector('.comp-statement');
           const originalText = statement.textContent;
@@ -1069,14 +1363,12 @@
         }
       });
 
-      // Hide empty categories
       document.querySelectorAll('.category-mobile').forEach(cat => {
         const visibleCards = cat.querySelectorAll('.competency-card:not(.hidden)');
         cat.style.display = visibleCards.length === 0 ? 'none' : 'block';
       });
     }
 
-    // Render
     function renderCategories() {
       const container = document.getElementById('categories-container');
       let html = '';
@@ -1085,10 +1377,18 @@
         section.categories.forEach(category => {
           const stats = getCategoryStats(category);
           html += `
-            <div class="category-mobile" id="cat-${category.id}">
+            <div class="category-mobile" data-section="${section.id}" id="cat-${category.id}">
               <div class="category-header-mobile" onclick="toggleCategory('${category.id}')">
-                <span class="category-title-mobile">${section.name}: ${category.name}</span>
-                <span class="category-badge">${stats.completed}/${stats.total}</span>
+                <div>
+                  <div class="category-section-name">${section.name}</div>
+                  <div class="category-title-mobile">${category.name}</div>
+                </div>
+                <div style="display: flex; align-items: center;">
+                  <span class="category-badge">${stats.completed}/${stats.total}</span>
+                  <svg class="category-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </div>
               </div>
               <div class="category-content-mobile">
                 ${category.competencies.map(comp => renderCompetencyCard(comp)).join('')}
@@ -1128,10 +1428,11 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="6 9 12 15 18 9"></polyline>
               </svg>
-              <span>Add Notes/Evidence${entries.length > 0 ? ` (${entries.length})` : ''}</span>
+              <span>Notes & Evidence</span>
+              ${entries.length > 0 ? `<span class="entry-count">${entries.length}</span>` : ''}
             </div>
             <div class="entry-form-mobile">
-              <textarea class="entry-textarea" id="entry-${comp.id}" placeholder="Type your notes or evidence..."></textarea>
+              <textarea class="entry-textarea" id="entry-${comp.id}" placeholder="Add notes or evidence documentation..."></textarea>
               <div class="entry-options">
                 <button class="entry-type-btn active" data-type="notes" onclick="selectEntryType(this)">Notes</button>
                 <button class="entry-type-btn" data-type="evidence" onclick="selectEntryType(this)">Evidence</button>
@@ -1152,17 +1453,21 @@
             <div class="entry-mobile ${entry.type}">
               <div class="entry-text-mobile">${entry.text}</div>
               <div class="entry-meta-mobile">
-                <span>${entry.type.charAt(0).toUpperCase() + entry.type.slice(1)}</span>
+                <span class="entry-type-badge">${entry.type}</span>
                 <span>${new Date(entry.timestamp).toLocaleDateString()}</span>
               </div>
-              <span class="entry-delete-mobile" onclick="deleteEntry('${compId}', ${idx})">&times;</span>
+              <div class="entry-delete-mobile" onclick="deleteEntry('${compId}', ${idx})">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </div>
             </div>
           `).join('')}
         </div>
       `;
     }
 
-    // Actions
     function toggleCategory(catId) {
       document.getElementById(`cat-${catId}`).classList.toggle('expanded');
     }
@@ -1193,7 +1498,7 @@
       const text = textarea.value.trim();
       if (!text) return;
 
-      const typeBtn = document.querySelector(`#entry-${compId}`).closest('.entry-form-mobile').querySelector('.entry-type-btn.active');
+      const typeBtn = textarea.closest('.entry-form-mobile').querySelector('.entry-type-btn.active');
       const type = typeBtn?.dataset.type || 'notes';
 
       if (!progress[compId]) progress[compId] = { status: 'pending', entries: [], files: [], dateCompleted: '' };
@@ -1222,7 +1527,6 @@
       }
     }
 
-    // Stats
     function updateStats() {
       let total = 0, pending = 0, inProcess = 0, review = 0, completed = 0;
 
@@ -1247,21 +1551,18 @@
       document.getElementById('stat-completed').textContent = completed;
       document.getElementById('progress-percent-mobile').textContent = percent + '%';
 
-      // Update progress ring
-      const circumference = 2 * Math.PI * 32;
+      const circumference = 2 * Math.PI * 36;
       const offset = circumference - (percent / 100) * circumference;
       document.getElementById('progress-ring-fill').style.strokeDashoffset = offset;
     }
 
-    // Toast
     function showToast(message) {
       const toast = document.getElementById('toast');
-      toast.textContent = message;
+      document.getElementById('toast-text').textContent = message;
       toast.classList.add('visible');
-      setTimeout(() => toast.classList.remove('visible'), 2000);
+      setTimeout(() => toast.classList.remove('visible'), 2500);
     }
 
-    // Export/Import
     function exportPDF() {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
@@ -1357,7 +1658,6 @@
       }
     }
 
-    // Initialize
     init();
   </script>
 </body>
