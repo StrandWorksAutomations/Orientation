@@ -685,18 +685,26 @@
       top: 12px;
       right: 12px;
       color: var(--danger);
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       border-radius: 6px;
       transition: background 0.2s;
+      border: none;
+      background: none;
+      padding: 0;
     }
 
     .entry-delete-mobile:active {
       background: rgba(220, 38, 38, 0.1);
+    }
+
+    .entry-delete-mobile:focus-visible {
+      outline: 2px solid var(--danger);
+      outline-offset: 2px;
     }
 
     /* Bottom Navigation - Glass Effect */
@@ -890,6 +898,249 @@
       color: var(--success-light);
     }
 
+    [data-theme="dark"] .toast-icon {
+      color: var(--success);
+    }
+
+    .toast-undo {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: inherit;
+      padding: 6px 14px;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      margin-left: 8px;
+      transition: background 0.2s;
+    }
+
+    .toast-undo:hover, .toast-undo:active {
+      background: rgba(255,255,255,0.3);
+    }
+
+    [data-theme="dark"] .toast-undo {
+      background: rgba(0,0,0,0.15);
+    }
+
+    [data-theme="dark"] .toast-undo:hover, [data-theme="dark"] .toast-undo:active {
+      background: rgba(0,0,0,0.25);
+    }
+
+    /* Confirmation Modal */
+    .confirm-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 400;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    .confirm-modal.active {
+      display: flex;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .confirm-modal-content {
+      background: var(--bg-primary);
+      border-radius: 20px;
+      padding: 24px;
+      max-width: 320px;
+      width: 100%;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .confirm-modal-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .confirm-modal-message {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .confirm-modal-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .confirm-modal-btn {
+      flex: 1;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 2px solid var(--border-color);
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      transition: all 0.2s;
+    }
+
+    .confirm-modal-btn:active {
+      transform: scale(0.98);
+    }
+
+    .confirm-modal-btn.danger {
+      background: var(--danger);
+      border-color: var(--danger);
+      color: white;
+    }
+
+    /* Search enhancements */
+    .search-clear-btn {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--bg-tertiary);
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .search-clear-btn.visible {
+      display: flex;
+    }
+
+    .search-clear-btn:active {
+      background: var(--border-color);
+    }
+
+    .search-clear-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .search-results-count {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      padding: 0 20px 12px;
+      display: none;
+    }
+
+    .search-results-count.visible {
+      display: block;
+    }
+
+    /* Active filter chip */
+    .active-filter-chip {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      color: white;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin: 0 16px 12px;
+      width: fit-content;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .active-filter-chip.visible {
+      display: inline-flex;
+    }
+
+    .active-filter-chip:active {
+      transform: scale(0.97);
+    }
+
+    .active-filter-chip svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Tappable stat cards */
+    .stat-mobile {
+      cursor: pointer;
+      transition: all 0.2s;
+      /* Reset button styles */
+      border: none;
+      font-family: inherit;
+      text-align: left;
+    }
+
+    .stat-mobile:active {
+      transform: scale(0.97);
+    }
+
+    .stat-mobile:focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    /* Category header button reset */
+    .category-header-mobile {
+      width: 100%;
+      border: none;
+      background: none;
+      text-align: left;
+      font-family: inherit;
+    }
+
+    .category-header-mobile:focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: -3px;
+    }
+    [data-theme="dark"] .category-header-mobile:focus-visible {
+      outline-color: var(--primary-light);
+    }
+
+    /* Entry toggle button */
+    .entry-toggle {
+      border: none;
+      background: none;
+      width: 100%;
+      font-family: inherit;
+    }
+
+    .entry-toggle:focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: 2px;
+      border-radius: 8px;
+    }
+
+    /* Category progress dots */
+    .category-progress-dots {
+      display: flex;
+      gap: 3px;
+      margin-right: 10px;
+    }
+
+    .progress-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gray-300);
+    }
+
+    .progress-dot.pending { background: var(--gray-400); }
+    .progress-dot.in-process { background: var(--warning); }
+    .progress-dot.review { background: var(--purple); }
+    .progress-dot.completed { background: var(--success); }
+
     /* Section Views */
     .section-view {
       display: none;
@@ -1042,35 +1293,53 @@
           <span class="progress-ring-text" id="progress-percent-mobile">0%</span>
         </div>
         <div class="progress-stats-mobile">
-          <div class="stat-mobile pending">
+          <button class="stat-mobile pending" onclick="filterByStatCard('pending')" aria-label="Filter by pending">
             <span class="stat-dot pending"></span>
             <div class="stat-info"><span class="number" id="stat-pending">0</span><br><span class="label">Pending</span></div>
-          </div>
-          <div class="stat-mobile in-process">
+          </button>
+          <button class="stat-mobile in-process" onclick="filterByStatCard('in-process')" aria-label="Filter by in progress">
             <span class="stat-dot in-process"></span>
             <div class="stat-info"><span class="number" id="stat-in-process">0</span><br><span class="label">In Progress</span></div>
-          </div>
-          <div class="stat-mobile review">
+          </button>
+          <button class="stat-mobile review" onclick="filterByStatCard('review')" aria-label="Filter by review">
             <span class="stat-dot review"></span>
             <div class="stat-info"><span class="number" id="stat-review">0</span><br><span class="label">Review</span></div>
-          </div>
-          <div class="stat-mobile completed">
+          </button>
+          <button class="stat-mobile completed" onclick="filterByStatCard('completed')" aria-label="Filter by completed">
             <span class="stat-dot completed"></span>
             <div class="stat-info"><span class="number" id="stat-completed">0</span><br><span class="label">Complete</span></div>
-          </div>
+          </button>
         </div>
       </div>
 
       <!-- Search Bar -->
       <div class="search-bar">
         <div class="search-container">
-          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
           <input type="text" class="search-input-mobile" id="search-input" placeholder="Search competencies..." oninput="handleSearch()" aria-label="Search competencies" role="searchbox">
+          <button class="search-clear-btn" id="search-clear-btn" onclick="clearSearch()" aria-label="Clear search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
         </div>
       </div>
+
+      <!-- Search Results Count -->
+      <div class="search-results-count" id="search-results-count"></div>
+
+      <!-- Active Filter Chip -->
+      <button class="active-filter-chip" id="active-filter-chip" onclick="clearFilter()" aria-label="Clear filter">
+        <span id="filter-chip-label"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
 
       <div id="categories-container"></div>
     </div>
@@ -1189,10 +1458,23 @@
 
   <!-- Toast -->
   <div class="toast" id="toast">
-    <svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
       <polyline points="20 6 9 17 4 12"></polyline>
     </svg>
     <span id="toast-text">Saved</span>
+    <button class="toast-undo" id="toast-undo" onclick="undoStatusChange()" style="display: none;">Undo</button>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="confirm-modal" id="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <div class="confirm-modal-content">
+      <div class="confirm-modal-title" id="confirm-title">Delete Entry?</div>
+      <div class="confirm-modal-message" id="confirm-message">This action cannot be undone.</div>
+      <div class="confirm-modal-actions">
+        <button class="confirm-modal-btn" onclick="closeConfirmModal()">Cancel</button>
+        <button class="confirm-modal-btn danger" id="confirm-action-btn" onclick="executeConfirmAction()">Delete</button>
+      </div>
+    </div>
   </div>
 
   <!-- Hidden file input -->
@@ -1344,6 +1626,10 @@
     let progress = {};
     let currentFilter = 'all';
     let searchQuery = '';
+    let pendingStatusChange = null;
+    let statusChangeTimeout = null;
+    let confirmCallback = null;
+    let totalCompetencies = 0;
 
     const STATUS_OPTIONS = ['pending', 'in-process', 'review', 'completed'];
     const STATUS_LABELS = {
@@ -1351,6 +1637,13 @@
       'in-process': 'In Progress',
       'review': 'Review',
       'completed': 'Done'
+    };
+    const FILTER_LABELS = {
+      'all': 'All',
+      'pending': 'Pending',
+      'in-process': 'In Progress',
+      'review': 'Review',
+      'completed': 'Completed'
     };
 
     function init() {
@@ -1432,11 +1725,14 @@
       }
     }
 
-    // ESC key to close modal
+    // ESC key to close modals
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        const modal = document.getElementById('filter-modal');
-        if (modal.classList.contains('active')) {
+        const filterModal = document.getElementById('filter-modal');
+        const confirmModal = document.getElementById('confirm-modal');
+        if (confirmModal.classList.contains('active')) {
+          closeConfirmModal();
+        } else if (filterModal.classList.contains('active')) {
           closeFilterModal();
         }
       }
@@ -1448,16 +1744,71 @@
         opt.classList.toggle('active', opt.dataset.filter === filter);
       });
       closeFilterModal();
+      updateFilterChip();
       applyFilters();
+    }
+
+    function filterByStatCard(status) {
+      currentFilter = status;
+      document.querySelectorAll('.filter-option').forEach(opt => {
+        opt.classList.toggle('active', opt.dataset.filter === status);
+      });
+      updateFilterChip();
+      applyFilters();
+    }
+
+    function clearFilter() {
+      currentFilter = 'all';
+      document.querySelectorAll('.filter-option').forEach(opt => {
+        opt.classList.toggle('active', opt.dataset.filter === 'all');
+      });
+      updateFilterChip();
+      applyFilters();
+    }
+
+    function updateFilterChip() {
+      const chip = document.getElementById('active-filter-chip');
+      const label = document.getElementById('filter-chip-label');
+      if (currentFilter !== 'all') {
+        label.textContent = FILTER_LABELS[currentFilter];
+        chip.classList.add('visible');
+      } else {
+        chip.classList.remove('visible');
+      }
     }
 
     function handleSearch() {
       searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
+      updateSearchUI();
       applyFilters();
+    }
+
+    function clearSearch() {
+      document.getElementById('search-input').value = '';
+      searchQuery = '';
+      updateSearchUI();
+      applyFilters();
+    }
+
+    function updateSearchUI() {
+      const clearBtn = document.getElementById('search-clear-btn');
+      clearBtn.classList.toggle('visible', searchQuery.length > 0);
+    }
+
+    function updateResultsCount(visibleCount) {
+      const resultsDiv = document.getElementById('search-results-count');
+      if (searchQuery || currentFilter !== 'all') {
+        resultsDiv.textContent = `Showing ${visibleCount} of ${totalCompetencies} competencies`;
+        resultsDiv.classList.add('visible');
+      } else {
+        resultsDiv.classList.remove('visible');
+      }
     }
 
     function applyFilters() {
       const cards = document.querySelectorAll('.competency-card');
+      let visibleCount = 0;
+
       cards.forEach(card => {
         const compId = card.dataset.compId;
         const status = getCompetencyStatus(compId);
@@ -1465,8 +1816,10 @@
 
         const matchesFilter = currentFilter === 'all' || status === currentFilter;
         const matchesSearch = searchQuery === '' || text.includes(searchQuery);
+        const isVisible = matchesFilter && matchesSearch;
 
-        card.classList.toggle('hidden', !(matchesFilter && matchesSearch));
+        card.classList.toggle('hidden', !isVisible);
+        if (isVisible) visibleCount++;
 
         if (matchesSearch && searchQuery) {
           const statement = card.querySelector('.comp-statement');
@@ -1480,30 +1833,36 @@
         const visibleCards = cat.querySelectorAll('.competency-card:not(.hidden)');
         cat.style.display = visibleCards.length === 0 ? 'none' : 'block';
       });
+
+      updateResultsCount(visibleCount);
     }
 
     function renderCategories() {
       const container = document.getElementById('categories-container');
       let html = '';
+      totalCompetencies = 0;
 
       competencyData.essenceOfJob.forEach(section => {
         section.categories.forEach(category => {
           const stats = getCategoryStats(category);
+          totalCompetencies += stats.total;
+          const progressDots = renderProgressDots(stats);
           html += `
             <div class="category-mobile" data-section="${section.id}" id="cat-${category.id}">
-              <div class="category-header-mobile" onclick="toggleCategory('${category.id}')">
+              <button class="category-header-mobile" onclick="toggleCategory('${category.id}')" aria-expanded="false" aria-controls="content-${category.id}">
                 <div>
                   <div class="category-section-name">${section.name}</div>
                   <div class="category-title-mobile">${category.name}</div>
                 </div>
                 <div style="display: flex; align-items: center;">
+                  <div class="category-progress-dots">${progressDots}</div>
                   <span class="category-badge">${stats.completed}/${stats.total}</span>
-                  <svg class="category-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <svg class="category-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <polyline points="6 9 12 15 18 9"></polyline>
                   </svg>
                 </div>
-              </div>
-              <div class="category-content-mobile">
+              </button>
+              <div class="category-content-mobile" id="content-${category.id}">
                 ${category.competencies.map(comp => renderCompetencyCard(comp)).join('')}
               </div>
             </div>
@@ -1515,11 +1874,20 @@
     }
 
     function getCategoryStats(category) {
-      let total = category.competencies.length, completed = 0;
+      let total = category.competencies.length;
+      let pending = 0, inProcess = 0, review = 0, completed = 0;
       category.competencies.forEach(comp => {
-        if (getCompetencyStatus(comp.id) === 'completed') completed++;
+        const status = getCompetencyStatus(comp.id);
+        if (status === 'completed') completed++;
+        else if (status === 'review') review++;
+        else if (status === 'in-process') inProcess++;
+        else pending++;
       });
-      return { total, completed };
+      return { total, pending, inProcess, review, completed, statuses: category.competencies.map(c => getCompetencyStatus(c.id)) };
+    }
+
+    function renderProgressDots(stats) {
+      return stats.statuses.map(status => `<span class="progress-dot ${status}"></span>`).join('');
     }
 
     function renderCompetencyCard(comp) {
@@ -1537,14 +1905,14 @@
             `).join('')}
           </div>
           <div class="entry-section">
-            <div class="entry-toggle" onclick="toggleEntry(this)">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <button class="entry-toggle" onclick="toggleEntry(this)" aria-expanded="false" aria-controls="entry-form-${comp.id}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <polyline points="6 9 12 15 18 9"></polyline>
               </svg>
               <span>Notes & Evidence</span>
               ${entries.length > 0 ? `<span class="entry-count">${entries.length}</span>` : ''}
-            </div>
-            <div class="entry-form-mobile">
+            </button>
+            <div class="entry-form-mobile" id="entry-form-${comp.id}">
               <textarea class="entry-textarea" id="entry-${comp.id}" placeholder="Add notes or evidence documentation..."></textarea>
               <div class="entry-options">
                 <button class="entry-type-btn active" data-type="notes" onclick="selectEntryType(this)">Notes</button>
@@ -1569,12 +1937,12 @@
                 <span class="entry-type-badge">${entry.type}</span>
                 <span>${new Date(entry.timestamp).toLocaleDateString()}</span>
               </div>
-              <div class="entry-delete-mobile" onclick="deleteEntry('${compId}', ${idx})">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <button class="entry-delete-mobile" onclick="deleteEntry('${compId}', ${idx})" aria-label="Delete entry">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                   <line x1="18" y1="6" x2="6" y2="18"></line>
                   <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
-              </div>
+              </button>
             </div>
           `).join('')}
         </div>
@@ -1582,11 +1950,15 @@
     }
 
     function toggleCategory(catId) {
-      document.getElementById(`cat-${catId}`).classList.toggle('expanded');
+      const category = document.getElementById(`cat-${catId}`);
+      const isExpanded = category.classList.toggle('expanded');
+      const button = category.querySelector('.category-header-mobile');
+      button.setAttribute('aria-expanded', isExpanded);
     }
 
     function toggleEntry(el) {
-      el.classList.toggle('expanded');
+      const isExpanded = el.classList.toggle('expanded');
+      el.setAttribute('aria-expanded', isExpanded);
     }
 
     function selectEntryType(btn) {
@@ -1595,15 +1967,63 @@
     }
 
     function setStatus(compId, status) {
+      // Cancel any pending status change
+      if (statusChangeTimeout) {
+        clearTimeout(statusChangeTimeout);
+        statusChangeTimeout = null;
+      }
+
+      const previousStatus = getCompetencyStatus(compId);
+
       if (!progress[compId]) progress[compId] = { status: 'pending', entries: [], files: [], dateCompleted: '' };
       progress[compId].status = status;
       if (status === 'completed' && !progress[compId].dateCompleted) {
         progress[compId].dateCompleted = new Date().toISOString().split('T')[0];
       }
-      saveProgress();
+
+      // Store pending change for undo
+      pendingStatusChange = { compId, previousStatus, newStatus: status };
+
+      // Update UI immediately
       renderCategories();
       updateStats();
       applyFilters();
+
+      // Show toast with undo button
+      showToastWithUndo(`Status changed to ${STATUS_LABELS[status]}`);
+
+      // Delay actual save by 3 seconds
+      statusChangeTimeout = setTimeout(() => {
+        commitStatusChange();
+      }, 3000);
+    }
+
+    function commitStatusChange() {
+      if (pendingStatusChange) {
+        localStorage.setItem('competency-progress-v3', JSON.stringify(progress));
+        pendingStatusChange = null;
+        statusChangeTimeout = null;
+        hideUndoButton();
+      }
+    }
+
+    function undoStatusChange() {
+      if (pendingStatusChange && statusChangeTimeout) {
+        clearTimeout(statusChangeTimeout);
+        statusChangeTimeout = null;
+
+        const { compId, previousStatus } = pendingStatusChange;
+        progress[compId].status = previousStatus;
+        if (previousStatus !== 'completed') {
+          progress[compId].dateCompleted = '';
+        }
+        pendingStatusChange = null;
+
+        renderCategories();
+        updateStats();
+        applyFilters();
+        showToast('Change undone');
+      }
     }
 
     function addEntry(compId) {
@@ -1632,12 +2052,40 @@
     }
 
     function deleteEntry(compId, entryIdx) {
-      if (progress[compId]?.entries?.[0]) {
-        progress[compId].entries[0].splice(entryIdx, 1);
-        saveProgress();
-        renderCategories();
-        applyFilters();
+      showConfirmModal(
+        'Delete Entry?',
+        'This action cannot be undone.',
+        'Delete',
+        () => {
+          if (progress[compId]?.entries?.[0]) {
+            progress[compId].entries[0].splice(entryIdx, 1);
+            saveProgress();
+            renderCategories();
+            applyFilters();
+          }
+        }
+      );
+    }
+
+    // Confirmation Modal Functions
+    function showConfirmModal(title, message, actionText, callback) {
+      document.getElementById('confirm-title').textContent = title;
+      document.getElementById('confirm-message').textContent = message;
+      document.getElementById('confirm-action-btn').textContent = actionText;
+      confirmCallback = callback;
+      document.getElementById('confirm-modal').classList.add('active');
+    }
+
+    function closeConfirmModal() {
+      document.getElementById('confirm-modal').classList.remove('active');
+      confirmCallback = null;
+    }
+
+    function executeConfirmAction() {
+      if (confirmCallback) {
+        confirmCallback();
       }
+      closeConfirmModal();
     }
 
     function updateStats() {
@@ -1672,8 +2120,24 @@
     function showToast(message) {
       const toast = document.getElementById('toast');
       document.getElementById('toast-text').textContent = message;
+      document.getElementById('toast-undo').style.display = 'none';
       toast.classList.add('visible');
       setTimeout(() => toast.classList.remove('visible'), 2500);
+    }
+
+    function showToastWithUndo(message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-text').textContent = message;
+      document.getElementById('toast-undo').style.display = 'inline-block';
+      toast.classList.add('visible');
+      // Keep visible for 3 seconds (undo window)
+      setTimeout(() => {
+        toast.classList.remove('visible');
+      }, 3000);
+    }
+
+    function hideUndoButton() {
+      document.getElementById('toast-undo').style.display = 'none';
     }
 
     function exportPDF() {
